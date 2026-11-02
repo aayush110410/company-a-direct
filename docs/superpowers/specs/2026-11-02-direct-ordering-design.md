@@ -45,7 +45,7 @@ time that degrades safely.
 
 ## 3. Architecture
 
-**Approach A (chosen):** one Next.js 15 (App Router, TypeScript) app deployed as a Render web
+**Approach A (chosen):** one Next.js 16 (App Router, TypeScript) app deployed as a Render web
 service; Supabase provides Postgres, Auth, Realtime and Storage; `pg_cron` runs periodic jobs inside
 Postgres.
 
@@ -111,16 +111,18 @@ Money in integer paise. Timestamps `timestamptz`.
 - `coupons(code PK, kind['percent'|'flat'], value, min_order_paise, max_discount_paise?,
   valid_from, valid_to, per_customer_limit, is_active)`
 - `orders(id 'WEB-nnnnnn', customer_id, outlet_id, status, subtotal_paise, discount_paise,
-  total_paise, gst_paise, coupon_code?, payment_method, payment_status, delivery_address,
-  customer_phone, distance_km, travel_minutes, placed_at, paid_at?, promised_at, ready_by,
-  ready_at?, handed_at?, delivered_at?, cancelled_at?, cancel_reason?, late_alerted_at?)`
+  total_paise, gst_paise, coupon_code?, payment_method, payment_status, distance_km, travel_minutes, placed_at, paid_at?, promised_at, ready_by,
+  preparing_at?, ready_at?, handed_at?, delivered_at?, cancelled_at?, cancel_reason?, late_alerted_at?,
+  revised_eta?)`
+- `order_contacts(order_id, customer_phone, delivery_address)` — personal data split out of `orders`
+  so it is never in the Realtime-published table and only the owning customer can read it (DPDP)
 - `order_items(id, order_id, item_id, portion_id, name_snapshot, portion_snapshot, qty,
   unit_price_paise, addons jsonb)`
 - `order_events(id, order_id, from_status, to_status, actor_id?, at)`
 - `payments(id, order_id, method['upi'|'card'], status['pending'|'succeeded'|'failed'|'expired'],
   amount_paise, provider_ref, created_at, updated_at)`
-- `prep_models(version, coefficients jsonb, residual_p80, residual_p50, train_n, mae, baseline_mae,
-  feature_ranges jsonb, trained_at, is_active)`
+- `prep_models(version, coefficients jsonb, residual_p80, residual_p50, train_n, mae, baseline_mean_mae,
+  baseline_rule_mae, outlet_train_counts jsonb, feature_ranges jsonb, trained_at, is_active)`
 - `prep_estimates(order_id PK, model_version, features jsonb, predicted_minutes, p80_minutes,
   confidence['normal'|'low'], outlet_min_minutes, source['model'|'outlet_minimum'|'manager_override'|'fallback'],
   promised_at, override_reason?, overridden_by?, actual_minutes?)`
