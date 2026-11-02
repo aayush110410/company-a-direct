@@ -22,12 +22,30 @@ export async function sql<T extends pg.QueryResultRow = pg.QueryResultRow>(text:
   return (await pool.query<T>(text, params)).rows;
 }
 
-/** Pause the live minute job so it cannot race assertions; restore it afterwards. */
+/**
+ * Removes every fixture the DB tests create. Fixtures use test-only prefixes (outlet-*, test-*,
+ * cat-*, item-*, *@test.example.com), so a crashed run is cleaned up by the next one too.
+ */
+export async function cleanupTestFixtures() {
+  const testOutlets = "select id from outlets where slug like 'outlet-%'";
+  const testUsers = "select id from auth.users where email like '%@test.example.com'";
+  await sql(`delete from orders where outlet_id in (${testOutlets}) or customer_id in (${testUsers})`);
+  await sql(`delete from alerts where outlet_id in (${testOutlets})`);
+  await sql(`delete from auth.users where email like '%@test.example.com'`);
+  await sql(`delete from outlets where slug like 'outlet-%'`);
+  await sql(`delete from cities where slug like 'test-%'`);
+  await sql(`delete from menu_items where slug like 'item-%'`);
+  await sql(`delete from categories where slug like 'cat-%'`);
+  await sql(`delete from coupons where code = 'RLSTEST'`);
+}
+
+/** Pause the live minute job so it cannot race assertions; restore it and clean up afterwards. */
 export function pauseCronDuringTests() {
   beforeAll(async () => {
     await sql("select cron.unschedule('order-jobs') where exists (select 1 from cron.job where jobname = 'order-jobs')");
   });
   afterAll(async () => {
+    await cleanupTestFixtures();
     await sql("select cron.schedule('order-jobs', '* * * * *', $$select public.run_order_jobs()$$)");
     await pool.end();
   });
