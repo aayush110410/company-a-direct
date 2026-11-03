@@ -8,7 +8,24 @@ import { customerStatusLabel, minutesLate } from "@/domain/urgency";
 import { cn } from "@/lib/cn";
 import { useLiveOrder } from "@/lib/realtime/use-live-order";
 import type { OrderView } from "@/server/orders/order-view";
+import { Rail } from "../kitchen/rail";
+import { MiniTicket, TicketPaper } from "../kitchen/ticket-paper";
 import { useNow } from "../kitchen/use-now";
+
+const STAGE_LABEL: Partial<Record<OrderView["status"], string>> = {
+  placed: "On the rail",
+  preparing: "Cooking",
+  ready: "Packed",
+  handed_to_rider: "With your rider",
+  delivered: "Delivered",
+};
+
+function railCaption(o: OrderView): string {
+  if (o.status !== "placed" && o.status !== "preparing") return "The kitchen has finished with your ticket.";
+  if (o.ticketsAhead === null || o.status === "preparing") return "Your order is being cooked now.";
+  if (o.ticketsAhead === 0) return "Yours is next on the rail.";
+  return `${o.ticketsAhead} ${o.ticketsAhead === 1 ? "ticket" : "tickets"} ahead of yours.`;
+}
 
 const STAGES = [
   { key: "placed", label: "Order on the rail", at: (o: OrderView) => o.paidAt },
@@ -42,7 +59,7 @@ export function OrderStatusScreen({ initial, justPaid }: { initial: OrderView; j
   }
 
   return (
-    <main className="mx-auto grid w-full max-w-5xl gap-12 px-5 pt-10 pb-24 lg:grid-cols-[minmax(0,1fr)_22rem]">
+    <main className="mx-auto grid w-full max-w-5xl gap-12 px-5 pt-10 pb-24 lg:grid-cols-[minmax(0,1fr)_24rem]">
       <div>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="text-muted">
@@ -50,7 +67,7 @@ export function OrderStatusScreen({ initial, justPaid }: { initial: OrderView; j
           </p>
           <LivePill state={connection} />
         </div>
-        <h1 className={cn("mt-4 font-display text-[clamp(2.5rem,8vw,4.5rem)] leading-[0.98] tracking-[-0.02em]", late && "text-[#f0a090]")}>
+        <h1 className={cn("mt-4 font-display text-[clamp(2.5rem,8vw,4.5rem)] leading-[0.98] tracking-[-0.02em]", late && "text-[var(--late-text)]")}>
           {order.status === "delivered" ? "Delivered. Enjoy." : late ? label : `Arrives by ${formatIstTime(revised ?? promised)}`}
         </h1>
         {late && revised && <p className="mt-3 text-lg text-muted">The kitchen knows, and we&rsquo;ve updated your estimate. Sorry for the wait.</p>}
@@ -81,11 +98,6 @@ export function OrderStatusScreen({ initial, justPaid }: { initial: OrderView; j
                 <div className="pt-0.5">
                   <p className={cn("text-lg", done ? "font-semibold" : "text-muted")}>{s.label}</p>
                   {at && <p className="text-sm text-muted tabular-nums">{formatIstTime(new Date(at))}</p>}
-                  {current && s.key === "placed" && order.ticketsAhead !== null && (
-                    <p className="text-sm text-muted">
-                      {order.ticketsAhead === 0 ? "Yours is next on the rail." : `${order.ticketsAhead} ${order.ticketsAhead === 1 ? "ticket" : "tickets"} ahead of yours.`}
-                    </p>
-                  )}
                 </div>
               </li>
             );
@@ -93,49 +105,57 @@ export function OrderStatusScreen({ initial, justPaid }: { initial: OrderView; j
         </ol>
       </div>
 
-      <aside>
-        {/* The same paper ticket the kitchen sees, clipped to the rail. */}
-        <div className="border-t-4 border-[#3d3b36] pt-5">
-          <article
-            className={cn(
-              "rounded-[var(--radius-ticket)] bg-paper text-ink shadow-[0_22px_40px_-22px_rgba(0,0,0,0.9)]",
-              justPaid && "motion-safe:animate-ticket-drop",
-            )}
-            aria-label={`Your ticket, order ${order.id}`}
-          >
-            <header className={cn("flex items-baseline justify-between px-4 py-2.5", late ? "bg-late text-white" : "bg-[#34312b] text-paper")}>
-              <span className="text-2xl font-bold tabular-nums">{order.id.replace("WEB-", "")}</span>
-              <span className="text-sm font-semibold">{label}</span>
-            </header>
-            <ul className="flex flex-col gap-1.5 px-4 py-3">
-              {order.items.map((i, n) => (
-                <li key={n} className="flex justify-between gap-3">
-                  <span>
-                    <b className="tabular-nums">{i.qty}×</b> {i.name}
-                    {i.portion !== "Single" && ` · ${i.portion}`}
-                    {i.addons.length > 0 && <span className="block text-sm text-ink-muted">+ {i.addons.join(", ")}</span>}
-                  </span>
-                  <Price paise={i.unitPaise * i.qty} className="shrink-0" />
-                </li>
-              ))}
-            </ul>
-            <footer className="border-t border-dashed border-paper-seam px-4 py-3 text-sm">
-              {order.discountPaise > 0 && (
-                <p className="flex justify-between">
-                  <span>Discount</span>
-                  <span className="tabular-nums">− <Price paise={order.discountPaise} /></span>
+      <aside className="min-w-0">
+        <h2 className="section-title mb-4">Your ticket on the {order.outletName} rail</h2>
+        {/* The same paper ticket the kitchen sees, hanging on the same rail behind the orders ahead of it. */}
+        {/* The outlet's rail: the queue ahead (anonymous) and your ticket, clipped on. */}
+        <Rail caption={railCaption(order)}>
+          <div className="flex items-start gap-2">
+            {Array.from({ length: Math.min(order.ticketsAhead ?? 0, 6) }, (_, i) => (
+              <MiniTicket key={i} />
+            ))}
+            {(order.ticketsAhead ?? 0) > 6 && <span className="pt-4 text-sm text-muted">+{(order.ticketsAhead ?? 0) - 6}</span>}
+            <MiniTicket mine number={order.id} dropped={justPaid} />
+          </div>
+        </Rail>
+        <TicketPaper
+              label={`Your ticket, order ${order.id}`}
+              number={order.id.replace("WEB-", "")}
+              status={STAGE_LABEL[order.status] ?? label}
+              tone={late ? "late" : "steel"}
+              size="customer"
+              className="mt-6"
+            >
+              <ul className="flex flex-col gap-1.5 px-4 py-3">
+                {order.items.map((i, n) => (
+                  <li key={n} className="flex justify-between gap-3">
+                    <span>
+                      <b className="tabular-nums">{i.qty}×</b> {i.name}
+                      {i.portion !== "Single" && ` · ${i.portion}`}
+                      {i.addons.length > 0 && <span className="block text-sm text-ink-muted">+ {i.addons.join(", ")}</span>}
+                    </span>
+                    <Price paise={i.unitPaise * i.qty} className="shrink-0" />
+                  </li>
+                ))}
+              </ul>
+              <footer className="border-t border-dashed border-paper-seam px-4 py-3 text-sm">
+                {order.discountPaise > 0 && (
+                  <p className="flex justify-between">
+                    <span>Discount</span>
+                    <span className="tabular-nums">
+                      − <Price paise={order.discountPaise} />
+                    </span>
+                  </p>
+                )}
+                <p className="flex justify-between text-base font-bold">
+                  <span>Paid ({order.paymentMethod === "upi" ? "UPI" : "Card"})</span>
+                  <Price paise={order.totalPaise} />
                 </p>
-              )}
-              <p className="flex justify-between text-base font-bold">
-                <span>Paid ({order.paymentMethod === "upi" ? "UPI" : "Card"})</span>
-                <Price paise={order.totalPaise} />
-              </p>
-              <p className="mt-1 text-ink-muted">
-                Includes <Price paise={order.gstPaise} /> GST · FSSAI Lic. {order.outletFssai}
-              </p>
-            </footer>
-          </article>
-        </div>
+                <p className="mt-1 text-ink-muted">
+                  Includes <Price paise={order.gstPaise} /> GST · FSSAI Lic. {order.outletFssai}
+                </p>
+              </footer>
+        </TicketPaper>
       </aside>
     </main>
   );

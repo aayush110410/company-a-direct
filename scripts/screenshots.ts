@@ -76,10 +76,18 @@ async function main() {
     const now = Date.now();
     const [late, risky] = open ?? [];
     if (late) {
+      // Paid 50 minutes ago and promised 11 minutes ago: elapsed time and lateness tell the same story.
       const promised = new Date(now - 11 * 60_000);
+      const paid = new Date(now - 50 * 60_000);
       await db
         .from("orders")
-        .update({ promised_at: promised.toISOString(), ready_by: new Date(promised.getTime() - late.travel_minutes * 60_000).toISOString() })
+        .update({
+          placed_at: paid.toISOString(),
+          paid_at: paid.toISOString(),
+          preparing_at: new Date(paid.getTime() + 4 * 60_000).toISOString(),
+          promised_at: promised.toISOString(),
+          ready_by: new Date(promised.getTime() - late.travel_minutes * 60_000).toISOString(),
+        })
         .eq("id", late.id);
       await db.rpc("run_order_jobs", { p_order_ids: [late.id] });
     }

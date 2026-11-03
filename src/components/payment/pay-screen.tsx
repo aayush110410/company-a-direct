@@ -51,8 +51,8 @@ export function PayScreen({ order }: { order: OrderView }) {
 
   return (
     <main className="mx-auto w-full max-w-lg px-5 pt-10 pb-24">
-      <p role="note" className="flex items-center gap-2 rounded-xl border border-risk/50 px-4 py-3 text-sm text-risk">
-        <FlaskConical className="size-4 shrink-0" aria-hidden />
+      <p role="note" className="flex items-center gap-2 rounded-xl border border-seam bg-surface px-4 py-3 text-sm text-muted">
+        <FlaskConical className="size-4 shrink-0 text-fg" aria-hidden />
         Test mode: no money moves. Use the buttons below to try success, failure or a timeout.
       </p>
 

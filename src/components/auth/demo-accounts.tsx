@@ -19,7 +19,7 @@ export function DemoAccounts({ next }: { next?: string }) {
   const [pending, start] = useTransition();
   return (
     <section aria-labelledby="demo-heading" className="mt-10 border-t border-seam pt-8">
-      <h2 id="demo-heading" className="plate-label">
+      <h2 id="demo-heading" className="section-title">
         Reviewing? Try a demo account
       </h2>
       <ul className="mt-3 flex flex-col">

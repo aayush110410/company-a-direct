@@ -1,23 +1,19 @@
 "use client";
 
 import { Clock3, Gauge } from "lucide-react";
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { advanceOrder } from "@/app/kitchen/actions";
 import { Button } from "@/components/ui";
 import { kitchenActionLabel } from "@/domain/order-status";
 import { formatIstTime } from "@/domain/time";
 import { kitchenUrgency, minutesLate } from "@/domain/urgency";
-import { cn } from "@/lib/cn";
 import type { BoardOrder } from "@/lib/realtime/board-reducer";
+import { type BandTone, TicketPaper } from "./ticket-paper";
 
-const BAND = {
-  on_time: "bg-[#34312b] text-paper",
-  at_risk: "bg-risk text-ink",
-  late: "bg-late text-white",
-} as const;
+const TONE = { on_time: "steel", at_risk: "risk", late: "late" } as const satisfies Record<string, BandTone>;
 
-/** A paper ticket on the rail: order number big enough to read across the kitchen. */
+/** A ticket on the kitchen rail: order number big enough to read across the kitchen, one action. */
 export function Ticket({
   order,
   now,
@@ -39,7 +35,6 @@ export function Ticket({
 }) {
   const [pending, start] = useTransition();
   const [dropped, setDropped] = useState(isNew);
-  const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (!isNew) return;
@@ -54,13 +49,21 @@ export function Ticket({
   const urgency = kitchenUrgency({ status: order.status, readyBy }, now);
   const elapsed = Math.max(0, Math.floor((now.getTime() - new Date(order.paidAt).getTime()) / 60_000));
   const action = kitchenActionLabel(order.status);
-  const lateBy = minutesLate(readyBy, now);
   const withRider = order.status === "handed_to_rider";
   const showAdjust = canManage && !withRider;
   const showCancel = order.status === "placed" || order.status === "preparing";
 
+  // The kitchen works to "ready by" (promise minus travel), so lateness here is measured against it.
   const statusText =
-    urgency === "late" ? `Late by ${lateBy} min` : urgency === "at_risk" ? "At risk" : withRider ? "With rider" : order.status === "ready" ? "Ready" : `Ready by ${formatIstTime(readyBy)}`;
+    urgency === "late"
+      ? `${minutesLate(readyBy, now)} min past ready-by`
+      : urgency === "at_risk"
+        ? `At risk · ready by ${formatIstTime(readyBy)}`
+        : withRider
+          ? "With rider"
+          : order.status === "ready"
+            ? "Ready"
+            : `Ready by ${formatIstTime(readyBy)}`;
 
   const advance = () =>
     start(async () => {
@@ -72,40 +75,35 @@ export function Ticket({
     });
 
   return (
-    <article
-      ref={ref}
-      aria-label={`Order ${order.id}, ${statusText}`}
-      className={cn(
-        "relative overflow-hidden rounded-[var(--radius-ticket)] bg-paper text-ink shadow-[0_22px_40px_-22px_rgba(0,0,0,0.9)]",
-        dropped && "motion-safe:animate-ticket-drop ring-4 ring-accent/70",
-        withRider && "opacity-75",
-      )}
+    <TicketPaper
+      label={`Order ${order.id}, ${statusText}`}
+      number={order.id.replace("WEB-", "")}
+      status={statusText}
+      tone={TONE[urgency]}
+      dropped={dropped}
+      muted={withRider}
+      className={dropped ? "ring-4 ring-accent/70" : undefined}
     >
-      <header className={cn("flex items-baseline justify-between gap-3 px-4 py-2.5", BAND[urgency])}>
-        <span className="text-[2rem] leading-none font-bold tracking-[-0.02em] tabular-nums">{order.id.replace("WEB-", "")}</span>
-        <span className="text-right text-[1rem] leading-tight font-semibold">{statusText}</span>
-      </header>
-
       {!withRider && (
-        <ul className="flex flex-col gap-1.5 px-4 pt-3 pb-2">
+        <ul className="flex flex-col gap-2 px-4 pt-3 pb-2">
           {order.items.map((i, n) => (
-            <li key={n} className="text-[1.375rem] leading-snug">
+            <li key={n} className="text-[1.5rem] leading-snug">
               <b className="tabular-nums">{i.qty}×</b> {i.name}
               {i.portion !== "Single" && <span className="font-semibold"> · {i.portion}</span>}
-              {i.addons.length > 0 && <span className="block text-[1rem] text-ink-muted">+ {i.addons.join(", ")}</span>}
+              {i.addons.length > 0 && <span className="block text-[1.125rem] text-ink-muted">+ {i.addons.join(", ")}</span>}
             </li>
           ))}
         </ul>
       )}
 
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 px-4 pb-3 text-[1rem] text-ink-muted">
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-1 px-4 pb-3 text-[1.125rem] text-ink-muted">
         <span className="flex items-center gap-1.5 tabular-nums">
-          <Clock3 className="size-4" aria-hidden />
+          <Clock3 className="size-5" aria-hidden />
           {elapsed} min in
         </span>
         {order.confidence === "low" && (
-          <span className="flex items-center gap-1.5 font-semibold text-risk" title="Kitchen is busier than usual; the estimate has a wider margin">
-            <Gauge className="size-4" aria-hidden />
+          <span className="flex items-center gap-1.5 font-semibold text-[var(--risk-on-paper)]" title="Kitchen is busier than usual; the estimate has a wider margin">
+            <Gauge className="size-5" aria-hidden />
             Low confidence
           </span>
         )}
@@ -119,22 +117,22 @@ export function Ticket({
           </Button>
         </div>
       )}
-      {showAdjust || showCancel ? (
-        <footer className="flex items-center justify-between gap-3 px-4 pb-3 text-[0.9375rem]">
+      {(showAdjust || showCancel) && (
+        <footer className="grid grid-cols-2 gap-2 px-3 pb-3">
           {showAdjust ? (
-            <button type="button" onClick={onAdjust} className="min-h-11 font-semibold underline decoration-paper-seam underline-offset-4 hover:decoration-ink">
+            <button type="button" onClick={onAdjust} className="min-h-16 rounded-xl border border-paper-seam text-[1.125rem] font-semibold hover:bg-white">
               Adjust time
             </button>
           ) : (
             <span />
           )}
           {showCancel && (
-            <button type="button" onClick={onCancel} className="min-h-11 text-ink-muted underline decoration-paper-seam underline-offset-4 hover:text-late">
+            <button type="button" onClick={onCancel} className="min-h-16 rounded-xl text-[1.125rem] text-ink-muted hover:bg-white hover:text-late">
               Cancel order
             </button>
           )}
         </footer>
-      ) : null}
-    </article>
+      )}
+    </TicketPaper>
   );
 }

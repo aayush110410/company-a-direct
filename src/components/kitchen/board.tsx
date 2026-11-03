@@ -14,6 +14,7 @@ import { CancelSheet } from "./cancel-sheet";
 import { KitchenClock } from "./clock";
 import { OverrideSheet } from "./override-sheet";
 import { ShiftStartOverlay } from "./shift-start-overlay";
+import { Rail } from "./rail";
 import { StockDrawer, type StockItem } from "./stock-drawer";
 import { Ticket } from "./ticket";
 import { useNow } from "./use-now";
@@ -58,7 +59,6 @@ export function KitchenBoard({
       <ShiftStartOverlay outletName={outlet.name} />
       <header className="flex flex-wrap items-center gap-x-6 gap-y-3 border-b border-seam px-5 py-3">
         <div className="mr-auto">
-          <p className="plate-label">Company A · Kitchen</p>
           <h1 className="font-display text-[2rem] leading-tight">{outlet.name}</h1>
         </div>
         <KitchenClock />
@@ -98,14 +98,14 @@ export function KitchenBoard({
       <main className="grid flex-1 gap-5 p-5 lg:grid-cols-4">
         {columns.map((c) => (
           <section key={c.key} aria-labelledby={`col-${c.key}`} className={cn("flex min-w-0 flex-col", tab !== c.key && "hidden lg:flex")}>
-            {/* The steel rail the tickets hang from. */}
-            <div className="mb-4 flex items-center justify-between border-b-4 border-[#3d3b36] pb-2">
-              <h2 id={`col-${c.key}`} className="text-[1.25rem] font-semibold">
+            <div className="mb-2 flex items-center justify-between">
+              <h2 id={`col-${c.key}`} className="text-[1.375rem] font-semibold">
                 {c.title}
               </h2>
-              <span className="text-[1.25rem] text-muted tabular-nums">{c.orders.length}</span>
+              <span className="text-[1.375rem] text-muted tabular-nums">{c.orders.length}</span>
             </div>
-            <div className="flex flex-col gap-4">
+            {/* Tickets hang from the rail by their clips. */}
+            <Rail className="pt-3">
               {c.orders.length === 0 ? (
                 <p className="rounded-xl border border-dashed border-seam px-4 py-8 text-center text-base text-muted">
                   {c.key === "placed" ? "No new tickets. New orders drop in here with a chime." : "Nothing here."}
@@ -125,7 +125,7 @@ export function KitchenBoard({
                   />
                 ))
               )}
-            </div>
+            </Rail>
           </section>
         ))}
       </main>
@@ -143,7 +143,7 @@ function AlertRow({ alert, onDone }: { alert: KitchenAlert; onDone: () => void }
     <div role="alert" className="flex flex-wrap items-center justify-between gap-3">
       <p className="flex items-center gap-3 text-[1.125rem] font-semibold">
         <BellRing className="size-5 text-[var(--late-text)]" aria-hidden />
-        {alert.message}. The customer has been sent a new estimate.
+        {alert.message.replace(/^WEB-(\d+) is (\d+) min past its promise$/, "$1 · customer promise missed by $2 min")} · a new estimate has been sent
       </p>
       <Button
         variant="secondary"

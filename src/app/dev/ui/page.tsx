@@ -13,7 +13,6 @@ export default async function UiGallery() {
   return (
     <main className="mx-auto flex max-w-5xl flex-col gap-14 px-5 py-12">
       <header className="flex flex-col gap-3">
-        <span className="plate-label">Company A · UI kit</span>
         <h1 className="font-display text-5xl leading-[1.02] tracking-[-0.02em] sm:text-6xl">Chicken dum biryani</h1>
         <p className="max-w-[60ch] text-lg text-muted">
           Long-grain basmati and marinated chicken, sealed and slow-cooked on dum. Served with mirchi ka salan and dahi chutney.
@@ -21,7 +20,7 @@ export default async function UiGallery() {
       </header>
 
       <section className="flex flex-col gap-4">
-        <h2 className="plate-label">Actions</h2>
+        <h2 className="section-title">Actions</h2>
         <div className="flex flex-wrap items-center gap-3">
           <Button size="lg">Pay ₹1,180</Button>
           <Button variant="secondary" size="lg">
@@ -35,7 +34,7 @@ export default async function UiGallery() {
       </section>
 
       <section className="flex flex-col gap-4">
-        <h2 className="plate-label">Marks, prices, states</h2>
+        <h2 className="section-title">Marks, prices, states</h2>
         <div className="flex flex-wrap items-center gap-5">
           <span className="flex items-center gap-2">
             <DietMark diet="veg" /> Veg biryani
@@ -61,12 +60,12 @@ export default async function UiGallery() {
 
       <section className="grid gap-6 sm:grid-cols-2">
         <div className="flex flex-col gap-4">
-          <h2 className="plate-label">Fields</h2>
+          <h2 className="section-title">Fields</h2>
           <Field label="Phone for delivery updates" placeholder="98765 43210" hint="We only message you about this order." />
           <Field label="Coupon" defaultValue="WELCOME" error="This code has expired" />
         </div>
         <div className="flex flex-col gap-3">
-          <h2 className="plate-label">Loading</h2>
+          <h2 className="section-title">Loading</h2>
           <Skeleton className="aspect-[4/3] w-full rounded-xl" />
           <Skeleton className="h-5 w-2/3" />
           <Skeleton className="h-4 w-1/3" />
@@ -80,7 +79,7 @@ export default async function UiGallery() {
       />
 
       <section data-theme="kitchen" className="rounded-2xl bg-bg p-6">
-        <h2 className="plate-label">Kitchen ticket</h2>
+        <h2 className="section-title">Kitchen ticket</h2>
         <div className="mt-4 grid max-w-sm gap-0 overflow-hidden rounded-[var(--radius-ticket)] bg-paper text-ink shadow-[0_18px_40px_-18px_rgba(0,0,0,0.8)]">
           <div className="flex items-baseline justify-between bg-late px-4 py-2 text-white">
             <span className="text-[2rem] font-bold tabular-nums">778146</span>

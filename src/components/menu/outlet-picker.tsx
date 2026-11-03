@@ -42,8 +42,8 @@ export function OutletPicker({ outlets, areas }: { outlets: OutletSummary[]; are
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-col gap-2 sm:flex-row">
-        <label className="relative flex-1">
+      <div className="flex gap-2">
+        <label className="relative min-w-0 flex-1">
           <span className="sr-only">Deliver to</span>
           <MapPin className="pointer-events-none absolute top-1/2 left-4 z-10 size-4 -translate-y-1/2 text-muted" aria-hidden />
           <select
@@ -80,14 +80,16 @@ export function OutletPicker({ outlets, areas }: { outlets: OutletSummary[]; are
           type="button"
           onClick={useMyLocation}
           disabled={locating}
-          className={buttonClasses("secondary", "lg", "bg-bg/60 backdrop-blur-md")}
+          aria-label={locating ? "Finding your location" : "Use my location"}
+          title="Use my location"
+          className="inline-flex h-13 w-13 shrink-0 items-center justify-center gap-2.5 rounded-xl border border-seam bg-bg/60 font-semibold text-fg backdrop-blur-md transition-colors hover:border-muted hover:bg-raised disabled:opacity-45 sm:w-auto sm:px-6"
         >
-          <LocateFixed className={cn("size-4", locating && "motion-safe:animate-pulse")} aria-hidden />
-          {locating ? "Locating…" : "Use my location"}
+          <LocateFixed className={cn("size-5", locating && "motion-safe:animate-pulse")} aria-hidden />
+          <span className="hidden sm:inline">{locating ? "Locating…" : "Use my location"}</span>
         </button>
       </div>
 
-      <div aria-live="polite" className="min-h-[7.5rem]">
+      <div aria-live="polite">
         {hydrated && match?.kind === "match" && (
           <OutletResult outlet={outletById(match.outletId)} km={match.distanceKm} label={location?.label ?? ""} />
         )}

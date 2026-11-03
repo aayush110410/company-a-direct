@@ -56,6 +56,7 @@
   --ok-text: #7cc394;
   --risk-text: #e0a526;
   --late-text: #e0705f;
+  --risk-on-paper: #855404;
 }
 
 /* Admin: paper ledger in a daytime office. */
@@ -184,12 +185,10 @@
 }
 
 @layer components {
-  /* Small engraved-plate labels, like station names on a steel pass. */
-  .plate-label {
-    font-size: 0.6875rem;
+  /* Section headings inside a screen: plain sentence case, never a kicker above another heading. */
+  .section-title {
+    font-size: 1rem;
     font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
+    color: var(--fg);
   }
 }

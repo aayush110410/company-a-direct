@@ -9,7 +9,7 @@ export function GalleryInteractive() {
   const [open, setOpen] = useState(false);
   return (
     <section className="flex flex-col gap-4">
-      <h2 className="plate-label">Choose</h2>
+      <h2 className="section-title">Choose</h2>
       <Segmented
         label="Portion"
         value={portion}

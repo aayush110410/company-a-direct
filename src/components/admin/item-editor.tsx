@@ -115,7 +115,7 @@ export function ItemEditor({ item, lookups }: { item: Item | null; lookups: Look
 
       <div className="mt-8 grid gap-10 lg:grid-cols-[18rem_minmax(0,1fr)]">
         <section aria-labelledby="photo-h" className="flex flex-col gap-3">
-          <h2 id="photo-h" className="plate-label">
+          <h2 id="photo-h" className="section-title">
             Photo
           </h2>
           <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-seam bg-surface">

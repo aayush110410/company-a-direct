@@ -9,7 +9,6 @@ import { placeOrderAction, quoteOrderAction } from "@/app/(customer)/actions";
 import { Button, buttonClasses, DietMark, EmptyState, Field, Price, Segmented, Skeleton, Stepper, TextAreaField } from "@/components/ui";
 import { formatINR } from "@/domain/money";
 import { formatIstTime } from "@/domain/time";
-import { cn } from "@/lib/cn";
 import { useCart } from "@/lib/cart/store";
 import { useDeliveryLocation } from "@/lib/location/store";
 import type { Quote } from "@/server/orders/quote";
@@ -120,7 +119,7 @@ export function CheckoutScreen({ defaultPhone }: { defaultPhone: string }) {
         </header>
 
         <section aria-labelledby="your-order">
-          <h2 id="your-order" className="plate-label">
+          <h2 id="your-order" className="section-title">
             Your order
           </h2>
           <ul className="mt-3 flex flex-col">
@@ -155,7 +154,7 @@ export function CheckoutScreen({ defaultPhone }: { defaultPhone: string }) {
         </section>
 
         <section aria-labelledby="delivery" className="flex flex-col gap-5">
-          <h2 id="delivery" className="plate-label">
+          <h2 id="delivery" className="section-title">
             Delivery
           </h2>
           <TextAreaField
@@ -179,7 +178,7 @@ export function CheckoutScreen({ defaultPhone }: { defaultPhone: string }) {
         </section>
 
         <section aria-labelledby="pay-with" className="flex flex-col gap-4">
-          <h2 id="pay-with" className="plate-label">
+          <h2 id="pay-with" className="section-title">
             Pay with
           </h2>
           <Segmented
@@ -228,7 +227,7 @@ export function CheckoutScreen({ defaultPhone }: { defaultPhone: string }) {
 
           <dl className="flex flex-col gap-2 text-[0.9375rem]">
             <Row label="Subtotal" value={quote ? formatINR(quote.subtotalPaise) : formatINR(cart.subtotalPaise)} />
-            {quote && quote.discountPaise > 0 && <Row label={`Discount (${appliedCoupon})`} value={`− ${formatINR(quote.discountPaise)}`} accent />}
+            {quote && quote.discountPaise > 0 && <Row label={`Discount (${appliedCoupon})`} value={`− ${formatINR(quote.discountPaise)}`} />}
             <Row label="Delivery" value="Free" />
             <div className="mt-2 flex items-baseline justify-between border-t border-seam pt-3">
               <dt className="font-semibold">Total</dt>
@@ -258,8 +257,7 @@ function PromiseLine({ quote, error }: { quote: Quote | null; error: string | nu
   if (!quote) return <Skeleton className="h-14 w-full" />;
   return (
     <div>
-      <p className="plate-label">Arrives by</p>
-      <p className="mt-1 font-display text-4xl leading-none">{formatIstTime(new Date(quote.promisedAt))}</p>
+      <p className="font-display text-4xl leading-tight">Arrives by {formatIstTime(new Date(quote.promisedAt))}</p>
       <p className="mt-2 flex items-center gap-1.5 text-sm text-muted">
         {quote.confidence === "low" ? (
           <>
@@ -274,11 +272,11 @@ function PromiseLine({ quote, error }: { quote: Quote | null; error: string | nu
   );
 }
 
-function Row({ label, value, accent }: { label: string; value: React.ReactNode; accent?: boolean }) {
+function Row({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <div className="flex items-baseline justify-between">
       <dt className="text-muted">{label}</dt>
-      <dd className={cn("tabular-nums", accent && "text-[var(--ok-text)]")}>{value}</dd>
+      <dd className="tabular-nums">{value}</dd>
     </div>
   );
 }
