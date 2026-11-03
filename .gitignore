@@ -48,3 +48,6 @@ playwright-report/
 test-results/
 submission/
 supabase/.temp/
+
+# Finish-review screenshots (regenerate with scripts/screenshots.ts)
+.impeccable/review/
