@@ -17,7 +17,7 @@ export default async function Home() {
         <div className="absolute inset-x-0 top-0 -z-10 h-[54svh] sm:h-full">
           <Image src={HERO_PHOTO.url} alt="Chicken dum biryani, fresh from the handi" fill priority sizes="100vw" className="object-cover" />
           {/* Light falls on the plate; the rest of the pass stays dark. */}
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(20,19,18,0.55)_0%,rgba(20,19,18,0)_22%,rgba(20,19,18,0.25)_60%,#141312_100%)] sm:bg-[linear-gradient(180deg,rgba(20,19,18,0.5)_0%,rgba(20,19,18,0)_18%,rgba(20,19,18,0.35)_45%,rgba(20,19,18,0.94)_80%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(20,19,18,0.55)_0%,rgba(20,19,18,0)_22%,rgba(20,19,18,0.25)_60%,#141312_100%)] sm:bg-[linear-gradient(90deg,rgba(20,19,18,0.92)_0%,rgba(20,19,18,0.78)_34%,rgba(20,19,18,0.2)_62%,rgba(20,19,18,0)_80%),linear-gradient(180deg,rgba(20,19,18,0.5)_0%,rgba(20,19,18,0)_18%,rgba(20,19,18,0)_70%,rgba(20,19,18,0.9)_100%)]" />
         </div>
         <SiteHeader overlay />
         <div className="mx-auto w-full max-w-6xl px-5 pt-[44svh] pb-10 sm:pt-40 sm:pb-16">

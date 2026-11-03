@@ -103,7 +103,7 @@ export function OrderStatusScreen({ initial, justPaid }: { initial: OrderView; j
             )}
             aria-label={`Your ticket, order ${order.id}`}
           >
-            <header className="flex items-baseline justify-between bg-ink px-4 py-2.5 text-paper">
+            <header className={cn("flex items-baseline justify-between px-4 py-2.5", late ? "bg-late text-white" : "bg-[#34312b] text-paper")}>
               <span className="text-2xl font-bold tabular-nums">{order.id.replace("WEB-", "")}</span>
               <span className="text-sm font-semibold">{label}</span>
             </header>

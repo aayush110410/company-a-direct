@@ -12,7 +12,7 @@ import { cn } from "@/lib/cn";
 import type { BoardOrder } from "@/lib/realtime/board-reducer";
 
 const BAND = {
-  on_time: "bg-ink text-paper",
+  on_time: "bg-[#34312b] text-paper",
   at_risk: "bg-risk text-ink",
   late: "bg-late text-white",
 } as const;
