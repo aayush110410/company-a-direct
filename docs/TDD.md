@@ -135,10 +135,13 @@ placed or preparing). "Late by N min" is computed for display, not stored as a s
    kitchen's current load.
 4. On "Pay", the server re-reads every price, coupon rule and availability. Nothing the browser
    sends about money or time is trusted. If a dish sold out, changed, or is outside its hours, that
-   **line** is flagged with Remove; the rest of the cart is kept.
+   **line** is flagged with Remove; the rest of the cart is kept. An outlet outside its opening
+   hours (IST, per outlet) takes no orders and says when it opens. The review deployment runs with
+   `DEMO_MODE=true`, which skips the hours check so the demo works at any hour; it is off by default.
 5. The test-mode payment page simulates success, failure or a timeout. On success the order is
    re-estimated against the kitchen *at that moment*, confirmed atomically, and a WhatsApp
-   confirmation goes to the outbox.
+   confirmation with a link to the live order goes to the outbox. While an order is on its way,
+   the site header shows **Track order**.
 6. The status page updates live (Realtime plus a 20-second refetch). It shows the order's paper
    ticket and "N tickets ahead of yours" (a count only; no other customer's data leaves the server).
 
@@ -272,9 +275,9 @@ and expired and failed payments.
 
 | Level | Count | What it covers |
 |---|---|---|
-| Unit and component (Vitest) | 179 tests, 31 files | Pricing and GST (including the brief's three totals), coupons, outlet matching, IST schedules, the status machine, urgency, the prep model (fit, accuracy beats both baselines, confidence, fallback, promise floor, override bounds), the cart, order placement and payment rules (unavailable or changed lines, tampered prices, double pay, expiry), kitchen rules, rush simulation, UI components |
-| Database (Vitest + local Supabase) | 29 tests | RLS on every table; single-winner transitions and payment confirmation under concurrency; late alerts fire once (and still fire at an outlet without a manager); expiry and mock delivery. RLS tests were checked by switching RLS off and watching them fail. |
-| End to end (Playwright) | 9 tests | Order → kitchen sees it live → kitchen starts it → customer sees it live; failed payment retry; out-of-range area; kitchen recovers after a dropped connection and after going offline; role access; a dinner rush fills a board |
+| Unit and component (Vitest) | 187 tests, 32 files | Pricing and GST (including the brief's three totals), coupons, outlet matching, IST schedules, the status machine, urgency, the prep model (fit, accuracy beats both baselines, confidence, fallback, promise floor, override bounds), the cart, order placement and payment rules (unavailable or changed lines, tampered prices, double pay, expiry), kitchen rules, rush simulation, UI components |
+| Database (Vitest + local Supabase) | 30 tests | RLS on every table; coupon uses counted only on paid orders; single-winner transitions and payment confirmation under concurrency; late alerts fire once (and still fire at an outlet without a manager); expiry and mock delivery. RLS tests were checked by switching RLS off and watching them fail. |
+| End to end (Playwright) | 10 tests | Order → kitchen sees it live → kitchen starts it → customer sees it live → header leads back to it; failed payment retry; a dish selling out between the quote and Pay; out-of-range area; kitchen recovers after a dropped connection and after going offline; role access; a dinner rush fills a board |
 
 Each end-to-end test also fails on any Content-Security-Policy violation or console error.
 
