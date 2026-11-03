@@ -1,5 +1,6 @@
 import "server-only";
 import type { Coupon } from "@/domain/coupons";
+import { serverEnv } from "../env";
 import { loadActiveModel } from "../model-store";
 import { toOutletSummary } from "../repo/outlets";
 import { createAdminClient } from "../supabase/admin";
@@ -9,10 +10,12 @@ import type { OrderDeps } from "./types";
 export function orderDeps(): OrderDeps {
   const db = createAdminClient();
   return {
+    // Demo deployments take orders round the clock so reviewers in any time zone can try them.
+    hoursEnforced: !serverEnv().DEMO_MODE,
     async loadOutlet(id) {
       const { data } = await db
         .from("outlets")
-        .select("id, slug, name, area, kind, lat, lng, delivery_radius_km, is_accepting_orders, fssai_licence, city_id, min_promise_minutes, capacity_slots, cities(slug)")
+        .select("id, slug, name, area, kind, lat, lng, delivery_radius_km, is_accepting_orders, fssai_licence, city_id, min_promise_minutes, capacity_slots, opens_at, closes_at, cities(slug)")
         .eq("id", id)
         .maybeSingle();
       return data ? toOutletSummary(data as never) : null;

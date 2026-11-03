@@ -111,4 +111,18 @@ describe("placeOrder", () => {
     const r = await placeOrder({ ...sample, ...contact }, "cust-1", deps, now);
     expect(r.ok).toBe(false);
   });
+
+  it("refuses an order before the kitchen opens and says when it does", async () => {
+    const early = new Date("2026-11-06T02:30:00Z"); // 08:00 IST
+    const { deps } = fakeOrderDeps({ outlet: { opensAt: "11:00:00", closesAt: "23:59:00" } });
+    const r = await quoteOrder(sample, "cust-1", deps, early);
+    expect(r).toMatchObject({ ok: false, error: "Kondapur is closed now. It opens at 11:00 am." });
+  });
+
+  it("takes orders at any hour when hours are not enforced (demo)", async () => {
+    const early = new Date("2026-11-06T02:30:00Z");
+    const { deps } = fakeOrderDeps({ outlet: { opensAt: "11:00:00", closesAt: "23:59:00" }, hoursEnforced: false });
+    const r = await quoteOrder(sample, "cust-1", deps, early);
+    expect(r.ok).toBe(true);
+  });
 });

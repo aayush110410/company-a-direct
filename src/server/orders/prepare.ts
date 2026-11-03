@@ -5,6 +5,7 @@ import { gstIncludedPaise } from "@/domain/money";
 import { computeFeatures, type PrepFeatures } from "@/domain/prep/features";
 import { estimatePrep, type PrepEstimate } from "@/domain/prep/model";
 import { computePromise } from "@/domain/prep/promise";
+import { clockLabel, isOutletOpen } from "@/domain/schedule";
 import { type PricedLine, priceCart } from "@/domain/pricing";
 import { type ActionFailure, fail } from "@/lib/result";
 import type { OutletSummary } from "../repo/outlets";
@@ -36,6 +37,7 @@ export async function prepareOrder(input: QuoteInput, customerId: string, deps: 
   const outlet = await deps.loadOutlet(input.outletId);
   if (!outlet) return fail("This kitchen isn't available. Choose your area again.");
   if (!outlet.isAcceptingOrders) return fail(`${outlet.name} isn't taking orders right now.`);
+  if (deps.hoursEnforced && !isOutletOpen(outlet, now)) return fail(`${outlet.name} is closed now. It opens at ${clockLabel(outlet.opensAt)}.`);
 
   const distanceKm = Math.round(haversineKm({ lat: input.deliveryLat, lng: input.deliveryLng }, outlet) * 100) / 100;
   if (distanceKm > outlet.radiusKm) return fail(`${outlet.name} doesn't deliver to this address (${distanceKm.toFixed(1)} km away).`, "address");

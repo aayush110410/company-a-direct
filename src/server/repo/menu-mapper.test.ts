@@ -15,7 +15,7 @@ const outlet = {
   cityId: "c-hyd",
   citySlug: "hyderabad",
   minPromiseMinutes: 35,
-  capacitySlots: 4,
+  capacitySlots: 4, opensAt: "11:00:00", closesAt: "23:59:00",
 };
 
 const item = (over: Partial<MenuRows["items"][number]>): MenuRows["items"][number] => ({

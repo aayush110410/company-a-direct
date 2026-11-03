@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isWithinSchedule, nextOpeningLabel, type Schedule } from "./schedule";
+import { clockLabel, isOutletOpen, isWithinSchedule, nextOpeningLabel, type Schedule } from "./schedule";
 
 const everyDay = [0, 1, 2, 3, 4, 5, 6];
 const evenings: Schedule = { days: everyDay, startsAt: "17:00", endsAt: "23:59" };
@@ -34,5 +34,33 @@ describe("isWithinSchedule", () => {
 describe("nextOpeningLabel", () => {
   it("names the opening time", () => {
     expect(nextOpeningLabel(evenings, ist("16:59"))).toBe("Available from 5:00 pm");
+  });
+});
+
+describe("isOutletOpen", () => {
+  const usual = { opensAt: "11:00:00", closesAt: "23:59:00" };
+
+  it("is open between opening and closing, IST", () => {
+    expect(isOutletOpen(usual, ist("21:00"))).toBe(true);
+    expect(isOutletOpen(usual, ist("11:00"))).toBe(true);
+  });
+
+  it("is closed before opening", () => {
+    expect(isOutletOpen(usual, ist("10:30"))).toBe(false);
+    expect(isOutletOpen(usual, ist("03:00"))).toBe(false);
+  });
+
+  it("handles a kitchen that closes after midnight", () => {
+    const late = { opensAt: "18:00", closesAt: "02:00" };
+    expect(isOutletOpen(late, ist("00:30"))).toBe(true);
+    expect(isOutletOpen(late, ist("02:30"))).toBe(false);
+  });
+});
+
+describe("clockLabel", () => {
+  it("reads a database time the way the rest of the site does", () => {
+    expect(clockLabel("11:00:00")).toBe("11:00 am");
+    expect(clockLabel("17:30")).toBe("5:30 pm");
+    expect(clockLabel("00:15")).toBe("12:15 am");
   });
 });

@@ -4,7 +4,7 @@ import type { OutletSummary } from "../repo/outlets";
 import type { NewOrderRow, OrderDeps } from "./types";
 
 /** In-memory dependencies for testing the order rules without a database. */
-export function fakeOrderDeps(over: { outlet?: Partial<OutletSummary>; coupon?: Coupon | null; couponUses?: number } = {}) {
+export function fakeOrderDeps(over: { outlet?: Partial<OutletSummary>; coupon?: Coupon | null; couponUses?: number; hoursEnforced?: boolean } = {}) {
   const outlet: OutletSummary = {
     id: "o-kondapur",
     slug: "kondapur",
@@ -20,6 +20,8 @@ export function fakeOrderDeps(over: { outlet?: Partial<OutletSummary>; coupon?: 
     citySlug: "hyderabad",
     minPromiseMinutes: 35,
     capacitySlots: 4,
+    opensAt: "00:00:00",
+    closesAt: "23:59:00",
     ...over.outlet,
   };
   const orders = new Map<string, NewOrderRow & { id: string; status: OrderStatus; paymentStatus: string; promised?: Date }>();
@@ -27,6 +29,7 @@ export function fakeOrderDeps(over: { outlet?: Partial<OutletSummary>; coupon?: 
   const calls = { confirmPayment: 0, messages: [] as string[] };
 
   const deps: OrderDeps = {
+    hoursEnforced: over.hoursEnforced ?? true,
     loadOutlet: async (id) => (id === outlet.id ? outlet : null),
     loadPriceBook: async () => ({
       portions: {

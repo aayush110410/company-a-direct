@@ -63,6 +63,8 @@ export type MessageRow = { channel: "whatsapp"; to_phone: string; template: stri
 
 /** Everything the order rules need from the outside world. Real: deps.ts. Tests: fake-deps.ts. */
 export type OrderDeps = {
+  /** False only in demo mode: outlet opening hours are then not checked. */
+  hoursEnforced: boolean;
   loadOutlet(id: string): Promise<OutletSummary | null>;
   loadPriceBook(outlet: OutletSummary): Promise<PriceBookWithMeta>;
   loadAvailability(

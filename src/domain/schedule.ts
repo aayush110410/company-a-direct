@@ -29,3 +29,17 @@ export function nextOpeningLabel(s: Schedule, now: Date): string {
   at.setTime(now.getTime() + (start - minutes) * 60_000);
   return `Available from ${formatIstTime(at)}`;
 }
+
+const EVERY_DAY = [0, 1, 2, 3, 4, 5, 6];
+
+/** Outlet hours in IST. A closing time earlier than the opening time runs past midnight. */
+export function isOutletOpen(hours: { opensAt: string; closesAt: string }, now: Date): boolean {
+  return isWithinSchedule({ days: EVERY_DAY, startsAt: hours.opensAt, endsAt: hours.closesAt }, now);
+}
+
+/** A wall-clock time ("11:00:00") in the site's format ("11:00 am"). */
+export function clockLabel(hhmm: string): string {
+  const total = toMinutes(hhmm);
+  const h = Math.floor(total / 60);
+  return `${h % 12 || 12}:${String(total % 60).padStart(2, "0")} ${h < 12 ? "am" : "pm"}`;
+}

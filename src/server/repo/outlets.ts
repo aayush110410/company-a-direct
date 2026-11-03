@@ -11,10 +11,13 @@ export type OutletSummary = OutletGeo & {
   citySlug: string;
   minPromiseMinutes: number;
   capacitySlots: number;
+  /** IST wall-clock times, "HH:MM:SS". */
+  opensAt: string;
+  closesAt: string;
 };
 
 const COLUMNS =
-  "id, slug, name, area, kind, lat, lng, delivery_radius_km, is_accepting_orders, fssai_licence, city_id, min_promise_minutes, capacity_slots, cities(slug)";
+  "id, slug, name, area, kind, lat, lng, delivery_radius_km, is_accepting_orders, fssai_licence, city_id, min_promise_minutes, capacity_slots, opens_at, closes_at, cities(slug)";
 
 type Row = {
   id: string;
@@ -30,6 +33,8 @@ type Row = {
   city_id: string;
   min_promise_minutes: number;
   capacity_slots: number;
+  opens_at: string;
+  closes_at: string;
   cities: { slug: string } | null;
 };
 
@@ -49,6 +54,8 @@ export function toOutletSummary(r: Row): OutletSummary {
     citySlug: r.cities?.slug ?? "",
     minPromiseMinutes: r.min_promise_minutes,
     capacitySlots: r.capacity_slots,
+    opensAt: r.opens_at,
+    closesAt: r.closes_at,
   };
 }
 
