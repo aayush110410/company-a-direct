@@ -100,7 +100,11 @@ export function CheckoutScreen({ defaultPhone }: { defaultPhone: string }) {
         router.push(`/pay/${r.data.orderId}`);
         return;
       }
-      if (r.field) setErrors({ [r.field]: r.error });
+      // Something sold out or changed since the quote: mark those lines so they can be removed.
+      const lost = r.details?.unavailable;
+      if (Array.isArray(lost) && lost.length > 0) {
+        setQuote((q) => q && { ...q, unavailable: lost as Quote["unavailable"] });
+      } else if (r.field) setErrors({ [r.field]: r.error });
       toast.error(r.error);
     });
 
