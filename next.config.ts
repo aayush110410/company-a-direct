@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   cacheComponents: false,
   partialPrefetching: false,
   images: {
+    // Unsplash resizes its own photos; see src/lib/image-loader.ts.
+    loader: "custom",
+    loaderFile: "./src/lib/image-loader.ts",
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
       new URL(`${supabaseUrl}/storage/v1/object/public/**`),
