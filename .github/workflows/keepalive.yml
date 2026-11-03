@@ -1,0 +1,15 @@
+name: Keep demo awake
+
+# Render's free tier sleeps after 15 idle minutes and free Supabase projects pause after a week
+# without traffic. During the review window this pings the health check, which also touches the DB.
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    if: ${{ vars.APP_URL != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: curl -fsS --max-time 60 "${{ vars.APP_URL }}/api/health"

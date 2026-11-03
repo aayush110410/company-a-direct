@@ -1,0 +1,27 @@
+# Render Blueprint: one Node web service. Secrets are entered in the Render dashboard (sync: false),
+# never stored here. See deployment.md.
+services:
+  - type: web
+    name: company-a-direct
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm build
+    startCommand: pnpm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: APP_URL
+        sync: false
+      - key: DEMO_MODE
+        value: "true"
+      - key: DEMO_USER_PASSWORD
+        sync: false

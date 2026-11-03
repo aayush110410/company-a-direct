@@ -1,0 +1,196 @@
+@import "tailwindcss";
+
+/*
+ * Company A — "Chef's open kitchen".
+ * Slate and steel at night, warm white type, one brass accent for the single live action.
+ * Kitchen tickets are paper on a steel rail. Admin works on paper (daytime office).
+ */
+
+/* `inline` makes utilities reference the variables directly, so a nested [data-theme] can re-skin a subtree. */
+@theme inline {
+  --font-display: var(--font-gloock), ui-serif, Georgia, serif;
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-seam: var(--seam);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-on-accent: var(--on-accent);
+  --color-paper: #f4f1ea;
+  --color-paper-seam: #ddd7cb;
+  --color-ink: #161514;
+  --color-ink-muted: #5e5a52;
+  --color-risk: #c98a12;
+  --color-late: #b3392c;
+  --color-ok: #3f8f5a;
+  --color-danger: var(--danger);
+  --color-veg: #1f8a4c;
+  --color-nonveg: #7a3b1d;
+
+  --radius-ticket: 6px;
+  --radius-sheet: 22px;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-ticket-drop: ticket-drop 520ms var(--ease-out-expo) both;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+}
+
+/* Customer: the pass at night. */
+:root {
+  color-scheme: dark;
+  --bg: #141312;
+  --surface: #1c1b19;
+  --raised: #24231f;
+  --seam: #35332e;
+  --fg: #f2eee6;
+  --muted: #a39c91;
+  --accent: #b08d57;
+  --accent-strong: #c9a46a;
+  --on-accent: #141312;
+  --danger: #e0705f;
+  --ok-text: #7cc394;
+  --risk-text: #e0a526;
+  --late-text: #e0705f;
+  --risk-on-paper: #855404;
+}
+
+/* Admin: paper ledger in a daytime office. */
+[data-theme="paper"] {
+  color-scheme: light;
+  --bg: #f4f1ea;
+  --surface: #fbf9f4;
+  --raised: #ffffff;
+  --seam: #ddd7cb;
+  --fg: #161514;
+  --muted: #5e5a52;
+  --accent: #6e5226;
+  --accent-strong: #5a421d;
+  --on-accent: #fbf9f4;
+  --danger: #a5352a;
+  --ok-text: #2b6a41;
+  --risk-text: #855404;
+  --late-text: #a5352a;
+}
+
+/* Kitchen: same world, steel rail, read from two metres. */
+[data-theme="kitchen"] {
+  --bg: #0f0e0d;
+  --surface: #1a1917;
+  --raised: #24231f;
+  font-size: 1.5rem;
+}
+
+/*
+ * A custom property that references another is resolved where it is declared. Re-declaring the
+ * colour tokens inside each themed scope makes nested themes (admin paper, kitchen) re-skin
+ * their subtree, whatever Tailwind emits for the utilities.
+ */
+[data-theme] {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-seam: var(--seam);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-on-accent: var(--on-accent);
+  --color-danger: var(--danger);
+}
+
+@keyframes ticket-drop {
+  0% {
+    transform: translateY(-28px) rotate(-1.2deg);
+    opacity: 0;
+    filter: blur(2px);
+  }
+  60% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01";
+    min-height: 100dvh;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--accent) 45%, transparent);
+    color: var(--fg);
+  }
+
+  input,
+  textarea {
+    caret-color: var(--accent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent-strong);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--seam) transparent;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 1ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 1ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Section headings inside a screen: plain sentence case, never a kicker above another heading. */
+  .section-title {
+    font-size: 1.125rem;
+    line-height: 1.4;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+}

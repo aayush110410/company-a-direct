@@ -1,0 +1,877 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-03T08:30:24+00:00",
+  "title": "Design System: Company A",
+  "extensions": {
+    "colorMeta": {
+      "slate": {
+        "role": "neutral",
+        "displayName": "Pass Slate",
+        "canonical": "#141312",
+        "tonalRamp": [
+          "#201f1d",
+          "#403d3a",
+          "#605b56",
+          "#807973",
+          "#9d9892",
+          "#bab6b2",
+          "#d6d4d2",
+          "#f3f2f2"
+        ]
+      },
+      "slate-surface": {
+        "role": "neutral",
+        "displayName": "Slate Surface",
+        "canonical": "#1c1b19",
+        "tonalRamp": [
+          "#201f1d",
+          "#403e39",
+          "#605d56",
+          "#807c72",
+          "#9d9992",
+          "#bab7b2",
+          "#d6d5d2",
+          "#f3f2f2"
+        ]
+      },
+      "steel": {
+        "role": "neutral",
+        "displayName": "Steel",
+        "canonical": "#24231f",
+        "tonalRamp": [
+          "#21201c",
+          "#414038",
+          "#625f54",
+          "#827f70",
+          "#9f9c90",
+          "#bbb9b0",
+          "#d7d6d1",
+          "#f3f3f1"
+        ]
+      },
+      "steel-seam": {
+        "role": "neutral",
+        "displayName": "Steel Seam",
+        "canonical": "#35332e",
+        "tonalRamp": [
+          "#21201c",
+          "#413f39",
+          "#625e55",
+          "#827d71",
+          "#9f9b90",
+          "#bbb8b1",
+          "#d7d5d1",
+          "#f3f3f1"
+        ]
+      },
+      "warm-white": {
+        "role": "neutral",
+        "displayName": "Warm White",
+        "canonical": "#f2eee6",
+        "tonalRamp": [
+          "#282215",
+          "#50432a",
+          "#78653e",
+          "#a08653",
+          "#b8a277",
+          "#cdbd9f",
+          "#e2d9c6",
+          "#f6f4ee"
+        ]
+      },
+      "ash": {
+        "role": "neutral",
+        "displayName": "Ash",
+        "canonical": "#a39c91",
+        "tonalRamp": [
+          "#211f1c",
+          "#423e37",
+          "#635d53",
+          "#847c6e",
+          "#a19a8e",
+          "#bcb7af",
+          "#d8d5d0",
+          "#f3f3f1"
+        ]
+      },
+      "brass": {
+        "role": "primary",
+        "displayName": "Pass Brass",
+        "canonical": "#b08d57",
+        "tonalRamp": [
+          "#2a2114",
+          "#534227",
+          "#7c623a",
+          "#a5834e",
+          "#bda072",
+          "#d0bb9b",
+          "#e4d7c5",
+          "#f7f3ee"
+        ]
+      },
+      "brass-lit": {
+        "role": "primary",
+        "displayName": "Pass Brass, lit",
+        "canonical": "#c9a46a",
+        "tonalRamp": [
+          "#2d2210",
+          "#594320",
+          "#866430",
+          "#b28641",
+          "#c8a267",
+          "#d8bd94",
+          "#e8d8c0",
+          "#f8f4ec"
+        ]
+      },
+      "ember-danger": {
+        "role": "neutral",
+        "displayName": "Ember",
+        "canonical": "#e0705f",
+        "tonalRamp": [
+          "#330f0a",
+          "#661f14",
+          "#992e1e",
+          "#cb3d27",
+          "#dd6452",
+          "#e79184",
+          "#f1bfb7",
+          "#fbecea"
+        ]
+      },
+      "ok-text-night": {
+        "role": "tertiary",
+        "displayName": "Ok Text Night",
+        "canonical": "#7cc394",
+        "tonalRamp": [
+          "#132a1b",
+          "#265336",
+          "#397d50",
+          "#4ca66b",
+          "#71be8b",
+          "#9bd1ad",
+          "#c4e4cf",
+          "#eef7f1"
+        ]
+      },
+      "risk-text-night": {
+        "role": "tertiary",
+        "displayName": "Risk Text Night",
+        "canonical": "#e0a526",
+        "tonalRamp": [
+          "#362708",
+          "#6a4e0f",
+          "#9f7417",
+          "#d49b1e",
+          "#e5b44a",
+          "#edca7f",
+          "#f4e0b4",
+          "#fcf6e9"
+        ]
+      },
+      "late-text-night": {
+        "role": "tertiary",
+        "displayName": "Late Text Night",
+        "canonical": "#e0705f",
+        "tonalRamp": [
+          "#330f0a",
+          "#661f14",
+          "#992e1e",
+          "#cb3d27",
+          "#dd6452",
+          "#e79184",
+          "#f1bfb7",
+          "#fbecea"
+        ]
+      },
+      "kitchen-slate": {
+        "role": "neutral",
+        "displayName": "Kitchen Slate",
+        "canonical": "#0f0e0d",
+        "tonalRamp": [
+          "#211f1c",
+          "#413d38",
+          "#625b55",
+          "#827971",
+          "#9f9890",
+          "#bbb6b1",
+          "#d7d4d1",
+          "#f3f2f1"
+        ]
+      },
+      "kitchen-surface": {
+        "role": "neutral",
+        "displayName": "Kitchen Surface",
+        "canonical": "#1a1917",
+        "tonalRamp": [
+          "#201f1d",
+          "#413e39",
+          "#615d55",
+          "#817c72",
+          "#9e9a91",
+          "#bab7b1",
+          "#d7d5d1",
+          "#f3f3f1"
+        ]
+      },
+      "ledger-paper": {
+        "role": "neutral",
+        "displayName": "Ledger Paper",
+        "canonical": "#f4f1ea",
+        "tonalRamp": [
+          "#282215",
+          "#50442a",
+          "#78663f",
+          "#9f8853",
+          "#b8a477",
+          "#cdbf9f",
+          "#e1d9c7",
+          "#f6f4ee"
+        ]
+      },
+      "ledger-surface": {
+        "role": "neutral",
+        "displayName": "Ledger Surface",
+        "canonical": "#fbf9f4",
+        "tonalRamp": [
+          "#2d2510",
+          "#594920",
+          "#866d31",
+          "#b29241",
+          "#c8ac67",
+          "#d8c494",
+          "#e8ddc0",
+          "#f8f5ec"
+        ]
+      },
+      "ledger-raised": {
+        "role": "neutral",
+        "displayName": "Ledger Raised",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#1f1f1f",
+          "#3d3d3d",
+          "#5b5b5b",
+          "#797979",
+          "#989898",
+          "#b6b6b6",
+          "#d4d4d4",
+          "#f2f2f2"
+        ]
+      },
+      "ledger-seam": {
+        "role": "neutral",
+        "displayName": "Ledger Seam",
+        "canonical": "#ddd7cb",
+        "tonalRamp": [
+          "#252118",
+          "#4a4130",
+          "#6e6148",
+          "#938260",
+          "#ad9f82",
+          "#c5bba6",
+          "#ddd7cb",
+          "#f5f3f0"
+        ]
+      },
+      "ledger-ink": {
+        "role": "neutral",
+        "displayName": "Ledger Ink",
+        "canonical": "#161514",
+        "tonalRamp": [
+          "#201f1d",
+          "#403d3a",
+          "#5f5b57",
+          "#7f7974",
+          "#9c9893",
+          "#b9b6b2",
+          "#d6d4d2",
+          "#f3f2f2"
+        ]
+      },
+      "ledger-ink-muted": {
+        "role": "neutral",
+        "displayName": "Ledger Ink Muted",
+        "canonical": "#5e5a52",
+        "tonalRamp": [
+          "#211f1d",
+          "#413e39",
+          "#615d55",
+          "#827c71",
+          "#9f9a90",
+          "#bbb7b1",
+          "#d7d5d1",
+          "#f3f3f1"
+        ]
+      },
+      "brass-deep": {
+        "role": "primary",
+        "displayName": "Ledger Brass",
+        "canonical": "#6e5226",
+        "tonalRamp": [
+          "#2d2210",
+          "#5a431f",
+          "#87652f",
+          "#b4863e",
+          "#caa365",
+          "#d9be92",
+          "#e9d9bf",
+          "#f8f4ec"
+        ]
+      },
+      "brass-deep-pressed": {
+        "role": "primary",
+        "displayName": "Ledger Brass, pressed",
+        "canonical": "#5a421d",
+        "tonalRamp": [
+          "#2e220f",
+          "#5c431e",
+          "#8a652c",
+          "#b7873b",
+          "#cda363",
+          "#dbbe90",
+          "#ead9be",
+          "#f9f4ec"
+        ]
+      },
+      "ledger-danger": {
+        "role": "neutral",
+        "displayName": "Ledger Danger",
+        "canonical": "#a5352a",
+        "tonalRamp": [
+          "#31100c",
+          "#611f19",
+          "#912f25",
+          "#c13e31",
+          "#d5655a",
+          "#e1928a",
+          "#eebfba",
+          "#faeceb"
+        ]
+      },
+      "ok-text-day": {
+        "role": "tertiary",
+        "displayName": "Ok Text Day",
+        "canonical": "#2b6a41",
+        "tonalRamp": [
+          "#122c1b",
+          "#235735",
+          "#35824f",
+          "#46ad6a",
+          "#6cc38a",
+          "#97d5ac",
+          "#c2e6cf",
+          "#edf8f1"
+        ]
+      },
+      "risk-text-day": {
+        "role": "tertiary",
+        "displayName": "Risk Text Day",
+        "canonical": "#855404",
+        "tonalRamp": [
+          "#3b2602",
+          "#764b04",
+          "#b17005",
+          "#ec9507",
+          "#f9af36",
+          "#fbc671",
+          "#fcdeac",
+          "#fef5e6"
+        ]
+      },
+      "late-text-day": {
+        "role": "tertiary",
+        "displayName": "Late Text Day",
+        "canonical": "#a5352a",
+        "tonalRamp": [
+          "#31100c",
+          "#611f19",
+          "#912f25",
+          "#c13e31",
+          "#d5655a",
+          "#e1928a",
+          "#eebfba",
+          "#faeceb"
+        ]
+      },
+      "ticket-paper": {
+        "role": "secondary",
+        "displayName": "Ticket Paper",
+        "canonical": "#f4f1ea",
+        "tonalRamp": [
+          "#282215",
+          "#50442a",
+          "#78663f",
+          "#9f8853",
+          "#b8a477",
+          "#cdbf9f",
+          "#e1d9c7",
+          "#f6f4ee"
+        ]
+      },
+      "ticket-seam": {
+        "role": "secondary",
+        "displayName": "Ticket Seam",
+        "canonical": "#ddd7cb",
+        "tonalRamp": [
+          "#252118",
+          "#4a4130",
+          "#6e6148",
+          "#938260",
+          "#ad9f82",
+          "#c5bba6",
+          "#ddd7cb",
+          "#f5f3f0"
+        ]
+      },
+      "ticket-ink": {
+        "role": "secondary",
+        "displayName": "Ticket Ink",
+        "canonical": "#161514",
+        "tonalRamp": [
+          "#201f1d",
+          "#403d3a",
+          "#5f5b57",
+          "#7f7974",
+          "#9c9893",
+          "#b9b6b2",
+          "#d6d4d2",
+          "#f3f2f2"
+        ]
+      },
+      "ticket-ink-muted": {
+        "role": "secondary",
+        "displayName": "Ticket Ink Muted",
+        "canonical": "#5e5a52",
+        "tonalRamp": [
+          "#211f1d",
+          "#413e39",
+          "#615d55",
+          "#827c71",
+          "#9f9a90",
+          "#bbb7b1",
+          "#d7d5d1",
+          "#f3f3f1"
+        ]
+      },
+      "ticket-band-steel": {
+        "role": "secondary",
+        "displayName": "Band Steel",
+        "canonical": "#34312b",
+        "tonalRamp": [
+          "#21201c",
+          "#433f37",
+          "#645e52",
+          "#857d6e",
+          "#a19b8e",
+          "#bdb8af",
+          "#d8d5d0",
+          "#f3f3f1"
+        ]
+      },
+      "rail-steel": {
+        "role": "secondary",
+        "displayName": "Rail Steel",
+        "canonical": "#3d3a34",
+        "tonalRamp": [
+          "#201f1d",
+          "#413e39",
+          "#615d56",
+          "#817c72",
+          "#9e9a91",
+          "#bab8b1",
+          "#d7d5d1",
+          "#f3f3f1"
+        ]
+      },
+      "signal-ok": {
+        "role": "tertiary",
+        "displayName": "Signal Ok",
+        "canonical": "#3f8f5a",
+        "tonalRamp": [
+          "#132a1b",
+          "#255435",
+          "#387e50",
+          "#4aa86a",
+          "#6fc08a",
+          "#99d2ad",
+          "#c3e5cf",
+          "#edf7f1"
+        ]
+      },
+      "signal-risk": {
+        "role": "tertiary",
+        "displayName": "Signal Risk",
+        "canonical": "#c98a12",
+        "tonalRamp": [
+          "#382705",
+          "#704d0a",
+          "#a7730f",
+          "#df9914",
+          "#eeb241",
+          "#f3c979",
+          "#f8dfb0",
+          "#fdf6e8"
+        ]
+      },
+      "signal-late": {
+        "role": "tertiary",
+        "displayName": "Signal Late",
+        "canonical": "#b3392c",
+        "tonalRamp": [
+          "#31100c",
+          "#621f18",
+          "#922f24",
+          "#c33e30",
+          "#d66559",
+          "#e29289",
+          "#eebfba",
+          "#faeceb"
+        ]
+      },
+      "fssai-veg": {
+        "role": "tertiary",
+        "displayName": "Fssai Veg",
+        "canonical": "#1f8a4c",
+        "tonalRamp": [
+          "#0b321c",
+          "#166337",
+          "#219552",
+          "#2dc66d",
+          "#56d98d",
+          "#87e4ae",
+          "#b9efd0",
+          "#eafaf1"
+        ]
+      },
+      "fssai-nonveg": {
+        "role": "tertiary",
+        "displayName": "Fssai Nonveg",
+        "canonical": "#7a3b1d",
+        "tonalRamp": [
+          "#31180c",
+          "#623017",
+          "#934723",
+          "#c45f2f",
+          "#d78158",
+          "#e3a689",
+          "#eecbba",
+          "#faefea"
+        ]
+      },
+      "clip-steel": {
+        "role": "secondary",
+        "displayName": "Clip Steel",
+        "canonical": "#5b574e",
+        "tonalRamp": [
+          "#1d1c19",
+          "#3a3832",
+          "#5b574e",
+          "#7a766c",
+          "#98948b",
+          "#b6b3ab",
+          "#d4d2cc",
+          "#f2f1ee"
+        ]
+      },
+      "risk-on-paper": {
+        "role": "tertiary",
+        "displayName": "Risk On Paper",
+        "canonical": "#855404",
+        "tonalRamp": [
+          "#2a1b01",
+          "#553503",
+          "#855404",
+          "#b07311",
+          "#d1953a",
+          "#e2b674",
+          "#efd5ad",
+          "#faf1e3"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display-hero": {
+        "displayName": "Display Hero",
+        "purpose": "Home dish line on plain slate beside the photograph; once per product, max 14ch."
+      },
+      "display": {
+        "displayName": "Display",
+        "purpose": "Order-status headline; menu outlet name and checkout title use near variants."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Screen titles; promised time on checkout."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Sheet titles, featured dish names, empty states."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Descriptions, 46-52ch."
+      },
+      "meta": {
+        "displayName": "Meta",
+        "purpose": "Hints, timestamps, addresses, allergens."
+      },
+      "figures": {
+        "displayName": "Figures",
+        "purpose": "Every price, quantity, clock and count."
+      },
+      "kitchen-order-id": {
+        "displayName": "Kitchen Order Id",
+        "purpose": "Order number in the kitchen ticket band, 36px bold tabular."
+      },
+      "section-title": {
+        "displayName": "Section Title",
+        "purpose": "Sentence-case heading inside a screen (Your order, Delivery, Pay with, Your ticket on the rail). Replaces any kicker."
+      },
+      "wordmark": {
+        "displayName": "Wordmark",
+        "purpose": "COMPANY A in spaced caps; the only spaced-caps text in the product."
+      },
+      "kitchen-item": {
+        "displayName": "Kitchen Item",
+        "purpose": "Item lines on a kitchen ticket, 24px."
+      },
+      "kitchen-meta": {
+        "displayName": "Kitchen Meta",
+        "purpose": "Timer, flags, add-ons, footer actions on a kitchen ticket, 18px; the ticket minimum."
+      }
+    },
+    "shadows": [
+      {
+        "name": "hanging-ticket",
+        "value": "0 22px 40px -22px rgba(0,0,0,0.9)",
+        "purpose": "Full paper tickets on the board and status page."
+      },
+      {
+        "name": "floating-cart-bar",
+        "value": "0 18px 40px -12px rgba(0,0,0,0.7)",
+        "purpose": "Fixed brass cart bar floating over menus."
+      },
+      {
+        "name": "rail-underside",
+        "value": "inset 0 -1px 0 rgba(0,0,0,0.4)",
+        "purpose": "Lower-edge line on the flat rail bar."
+      },
+      {
+        "name": "sheet-overlay",
+        "value": "rgb(0 0 0 / 0.65)",
+        "purpose": "Scrim behind sheets."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Default easing for authored moments and state changes."
+      },
+      {
+        "name": "ticket-drop",
+        "value": "ticket-drop 520ms cubic-bezier(0.16, 1, 0.3, 1) both",
+        "purpose": "Customer's own mini ticket after payment; new kitchen ticket (plus 4px brass ring at 70% for 1.2s and a chime)."
+      },
+      {
+        "name": "shimmer",
+        "value": "shimmer 1.6s linear infinite",
+        "purpose": "Skeleton loading only."
+      },
+      {
+        "name": "state-transition",
+        "value": "150ms-220ms ease-out",
+        "purpose": "Colour, border, opacity, 0.98 press scale."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animation/transition 1ms, 1 iteration",
+        "purpose": "prefers-reduced-motion: reduce."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ],
+    "themes": [
+      {
+        "name": "night",
+        "selector": ":root",
+        "purpose": "Customer: the pass at night."
+      },
+      {
+        "name": "paper",
+        "selector": "[data-theme=\"paper\"]",
+        "purpose": "Admin: paper ledger."
+      },
+      {
+        "name": "kitchen",
+        "selector": "[data-theme=\"kitchen\"]",
+        "purpose": "Kitchen board: darker grounds, 1.5rem base; paper tickets on per-column rails."
+      },
+      {
+        "name": "color-redeclare",
+        "selector": "[data-theme]",
+        "purpose": "Every themed scope re-declares --color-* role tokens so nested themes re-skin their subtree."
+      }
+    ],
+    "kitchenFloor": {
+      "orderIdPx": 36,
+      "itemLinePx": 24,
+      "bandStatusPx": 20,
+      "secondaryLineMinPx": 18,
+      "kitchenControlMinPx": 64,
+      "colourNeverOnlySignal": true
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single brass live action on a view.",
+      "html": "<button class=\"ds-btn-primary\">See the menu</button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 16px;border:0;border-radius:8px;background:var(--color-accent,#b08d57);color:var(--color-on-accent,#141312);font:600 15px/1 'Hanken Grotesk',system-ui,sans-serif;letter-spacing:-0.005em;transition:background-color 150ms ease-out,transform 150ms ease-out;cursor:pointer}.ds-btn-primary:hover{background:var(--color-accent-strong,#c9a46a)}.ds-btn-primary:active{transform:scale(.98)}.ds-btn-primary:focus-visible{outline:2px solid var(--color-accent-strong,#c9a46a);outline-offset:3px}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Outline action beside the brass one.",
+      "html": "<button class=\"ds-btn-secondary\">Use my location</button>",
+      "css": ".ds-btn-secondary{display:inline-flex;align-items:center;height:44px;padding:0 16px;border:1px solid var(--color-seam,#35332e);border-radius:8px;background:transparent;color:var(--color-fg,#f2eee6);font:600 15px/1 'Hanken Grotesk',system-ui,sans-serif;transition:background-color 150ms ease-out,border-color 150ms ease-out;cursor:pointer}.ds-btn-secondary:hover{border-color:var(--color-muted,#a39c91);background:var(--color-raised,#24231f)}.ds-btn-secondary:focus-visible{outline:2px solid #c9a46a;outline-offset:3px}"
+    },
+    {
+      "name": "Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Labelled text field with hint or error.",
+      "html": "<label class=\"ds-field\"><span>Flat or house number</span><input placeholder=\"e.g. 4B, Lake View\"/></label>",
+      "css": ".ds-field{display:flex;flex-direction:column;gap:6px;font:500 14px 'Hanken Grotesk',system-ui,sans-serif;color:#f2eee6}.ds-field input{border:1px solid #35332e;border-radius:8px;background:#1c1b19;color:#f2eee6;padding:12px 14px;font:400 16px 'Hanken Grotesk',system-ui,sans-serif;transition:border-color 150ms ease-out}.ds-field input:hover{border-color:#a39c91}.ds-field input:focus{outline:none;border-color:#b08d57}"
+    },
+    {
+      "name": "Segmented",
+      "kind": "chip",
+      "refersTo": "segmented-selected",
+      "description": "Radio group; selection in warm white, never brass.",
+      "html": "<div class=\"ds-seg\" role=\"radiogroup\"><button aria-checked=\"true\">UPI</button><button aria-checked=\"false\">Card</button></div>",
+      "css": ".ds-seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;padding:4px;border:1px solid #35332e;border-radius:12px;background:#1c1b19}.ds-seg button{min-height:44px;border:0;border-radius:8px;background:transparent;color:#a39c91;font:600 14px 'Hanken Grotesk',system-ui,sans-serif;transition:color 150ms ease-out;cursor:pointer}.ds-seg button:hover{color:#f2eee6}.ds-seg button[aria-checked=true]{background:#f2eee6;color:#141312}"
+    },
+    {
+      "name": "Menu Row",
+      "kind": "card",
+      "refersTo": "menu-row-photo",
+      "description": "Dish row: photo, diet mark, name, line, tabular price.",
+      "html": "<button class=\"ds-row\"><span class=\"ds-row-ph\"></span><span class=\"ds-row-t\"><b><svg width=\"14\" height=\"14\" viewBox=\"0 0 16 16\"><rect x=\".75\" y=\".75\" width=\"14.5\" height=\"14.5\" rx=\"2\" fill=\"#fff\" stroke=\"#1f8a4c\" stroke-width=\"1.5\"/><circle cx=\"8\" cy=\"8\" r=\"3.6\" fill=\"#1f8a4c\"/></svg>Veg biryani</b><small>Seasonal vegetables, dum-cooked.</small></span><span class=\"ds-row-p\">&#8377;280</span></button>",
+      "css": ".ds-row{display:flex;align-items:center;gap:16px;width:100%;padding:16px 0;border:0;border-bottom:1px solid #35332e;background:none;color:#f2eee6;text-align:left;font-family:'Hanken Grotesk',system-ui,sans-serif;cursor:pointer}.ds-row-ph{width:80px;height:80px;border-radius:12px;background:#1c1b19;flex-shrink:0}.ds-row-t{flex:1;display:flex;flex-direction:column;gap:4px}.ds-row-t b{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:600}.ds-row-t small{font-size:14px;color:#a39c91}.ds-row-p{font-weight:600;font-variant-numeric:tabular-nums}.ds-row:focus-visible{outline:2px solid #c9a46a;outline-offset:3px}"
+    },
+    {
+      "name": "LivePill",
+      "kind": "chip",
+      "refersTo": "live-pill",
+      "description": "Realtime connection state: steady warm white dot plus word; risk/late only when degraded.",
+      "html": "<span class=\"ds-live\"><i></i>Live</span>",
+      "css": ".ds-live{display:inline-flex;align-items:center;gap:8px;padding:4px 12px;border:1px solid #35332e;border-radius:9999px;color:#f2eee6;font:500 14px 'Hanken Grotesk',system-ui,sans-serif}.ds-live i{width:8px;height:8px;border-radius:50%;background:#f2eee6}"
+    },
+    {
+      "name": "Paper Ticket",
+      "kind": "custom",
+      "refersTo": "ticket",
+      "description": "Signature: the order as a paper slip; clipped only when it touches the rail. Shared by kitchen and customer.",
+      "html": "<div class=\"ds-rail\"></div><article class=\"ds-ticket\"><span class=\"ds-clip\"></span><header><span>778466</span><span>Ready by 2:15 pm</span></header><ul><li><b>2&times;</b> Chicken dum biryani</li><li><b>1&times;</b> Mirchi ka salan</li></ul><p class=\"ds-meta\">2 min in</p><div class=\"ds-ticket-act\"><button>Start</button></div></article>",
+      "css": ".ds-rail{max-width:320px;height:10px;border-radius:9999px;background:#3d3a34;box-shadow:inset 0 -1px 0 rgba(0,0,0,.4)}.ds-ticket{position:relative;max-width:320px;margin-top:12px;border-radius:0 0 6px 6px;background:#f4f1ea;color:#161514;box-shadow:0 22px 40px -22px rgba(0,0,0,.9);font-family:'Hanken Grotesk',system-ui,sans-serif}.ds-clip{position:absolute;top:-12px;left:50%;width:48px;height:16px;transform:translateX(-50%);border-radius:0 0 6px 6px;background:#5b574e}.ds-ticket header{display:flex;flex-direction:column;gap:4px;padding:12px 16px;background:#34312b;color:#f4f1ea}.ds-ticket header span:first-child{font-size:36px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}.ds-ticket header span:last-child{font-size:20px;font-weight:600;line-height:1.25}.ds-ticket ul{list-style:none;margin:0;padding:12px 16px 8px;font-size:24px;line-height:1.375}.ds-meta{margin:0;padding:0 16px 12px;font-size:18px;color:#5e5a52;font-variant-numeric:tabular-nums}.ds-ticket-act{border-top:1px solid #ddd7cb;padding:12px}.ds-ticket-act button{width:100%;height:64px;border:0;border-radius:12px;background:#161514;color:#f4f1ea;font:600 18px 'Hanken Grotesk',system-ui,sans-serif;transition:background-color 150ms ease-out,transform 150ms ease-out;cursor:pointer}.ds-ticket-act button:hover{background:#2a2826}.ds-ticket-act button:active{transform:scale(.98)}.ds-ticket-act button:focus-visible{outline:2px solid #c9a46a;outline-offset:3px}"
+    },
+    {
+      "name": "Mini Ticket Rail",
+      "kind": "custom",
+      "refersTo": "mini-ticket",
+      "description": "Customer status page: up to 4 anonymous tickets, +N, then the customer's own brass-ringed ticket.",
+      "html": "<div class=\"ds-mrail\"></div><div class=\"ds-mrow\"><span class=\"ds-mt\"><i></i><b></b></span><span class=\"ds-mt\"><i></i><b></b></span><span class=\"ds-more\">+3</span><span class=\"ds-mt ds-mine\"><i></i><b></b><em>470</em></span></div><p class=\"ds-cap\">7 tickets ahead of yours.</p>",
+      "css": ".ds-mrail{max-width:320px;height:10px;border-radius:9999px;background:#3d3a34;box-shadow:inset 0 -1px 0 rgba(0,0,0,.4)}.ds-mrow{display:flex;align-items:flex-start;gap:8px}.ds-mt{position:relative;display:block;width:44px;height:56px;border-radius:0 0 6px 6px;background:rgb(244 241 234/.3)}.ds-mt i{position:absolute;top:-8px;left:50%;width:20px;height:12px;transform:translateX(-50%);border-radius:0 0 4px 4px;background:rgb(91 87 78/.7)}.ds-mt b{display:block;height:20px;background:rgb(52 49 43/.6)}.ds-mine{background:#f4f1ea;box-shadow:0 0 0 2px #b08d57}.ds-mine i{background:#b08d57}.ds-mine b{background:#34312b}.ds-mine em{display:block;padding-top:4px;text-align:center;font:700 12px 'Hanken Grotesk',system-ui,sans-serif;font-style:normal;color:#161514;font-variant-numeric:tabular-nums}.ds-more{padding-top:16px;font:14px 'Hanken Grotesk',system-ui,sans-serif;color:#a39c91}.ds-cap{margin:12px 0 0;font:14px 'Hanken Grotesk',system-ui,sans-serif;color:#a39c91}"
+    },
+    {
+      "name": "Section Title",
+      "kind": "custom",
+      "refersTo": "section-title",
+      "description": "Sentence-case section heading; never a kicker.",
+      "html": "<h2 class=\"ds-st\">Your order</h2>",
+      "css": ".ds-st{margin:0;font:650 18px/1.4 'Hanken Grotesk',system-ui,sans-serif;letter-spacing:-.01em;color:#f2eee6}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Pass at Night",
+    "overview": "Company A is a chef's open kitchen after dark. The customer stands at the pass: slate and steel surfaces joined by 1px seams, warm white type, food lit in full colour against the dark, and exactly one brass control that says what to do next. Once paid, the order is a paper ticket hanging on that outlet's steel rail, the same paper ticket component the cooks read. On the customer's status page the rail shows the queue ahead as small anonymous tickets with the customer's own ringed in brass, and the full receipt sits below it. The kitchen display is the same world seen from the line: darker slate, four columns, each with its own rail and tickets hanging from it, a steel, amber or red band across each ticket's head that tells urgency from two metres away. Admin is the same company's daytime office: a paper ledger, ink type, deep brass for its one primary action.\n\nThree themes, one material vocabulary (slate, steel, paper, ink, brass) and one pair of typefaces. The build refuses the orange delivery-app card grid: menus are rows and one featured plate per category, not tiles. Headings are plain sentence case; there are no uppercase eyebrows anywhere in the product. The only spaced capitals are the \"COMPANY A\" wordmark.",
+    "keyCharacteristics": [
+      "Dark, warm-neutral customer surfaces; tonal layering by seams, not shadows.",
+      "One brass action per view; everything else is warm white, ash or outline.",
+      "Paper tickets on a steel rail are the signature object, shared by the status page and the kitchen board.",
+      "Gloock for dish names, headlines and the arrival time; Hanken Grotesk with tabular figures for everything operational.",
+      "Untinted food photography is the only colour field on customer screens.",
+      "One authored moment per surface (ticket drop); every other transition is 150-220 ms."
+    ],
+    "rules": [
+      {
+        "name": "The One Brass Rule",
+        "body": "Brass fills exactly one control per view: the next step. Secondary actions are outline or ghost in warm white; selection uses warm white, never brass. If a second brass fill appears, one of them is wrong.",
+        "section": "colors"
+      },
+      {
+        "name": "The Signal Is Not Text Rule",
+        "body": "Signal colours fill bands, dots and borders. Words that carry status use the current theme's status-text token, or risk-on-paper on a ticket.",
+        "section": "colors"
+      },
+      {
+        "name": "The Quiet Live Rule",
+        "body": "A healthy state is warm white and still: the live dot does not pulse, the Track order dot is warm white, money lines are warm white. Colour arrives only when something needs attention.",
+        "section": "colors"
+      },
+      {
+        "name": "The Chalkboard Rule",
+        "body": "Gloock is for names and times a person reads once and remembers. Buttons, forms, tables, numbers and ticket bodies are Hanken Grotesk.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Rule",
+        "body": "Every number that changes or lines up (price, qty, time, count, order id) is tabular.",
+        "section": "typography"
+      },
+      {
+        "name": "The No Kicker Rule",
+        "body": "A section is named by a sentence-case Section Title. Nothing sits above a heading to introduce it, and no label is set in small spaced capitals.",
+        "section": "typography"
+      },
+      {
+        "name": "The Seam Not Shadow Rule",
+        "body": "Panels, rows, fields and cards separate by 1px seams and tonal steps. Only a ticket or a floating bar casts a shadow.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do give each view one brass action, and keep selection states in warm white.",
+      "Do set status words in `--ok-text`, `--risk-text`, `--late-text`, or risk-on-paper on a ticket; keep signal colours for bands, dots and borders.",
+      "Do re-declare the `--color-*` role tokens in any new `[data-theme]` scope.",
+      "Do use the shared paper ticket for anything that represents an order: band, number line, written status line.",
+      "Do clip a ticket only where it touches the rail.",
+      "Do name sections with a sentence-case Section Title (650, 1.125rem).",
+      "Do keep numbers tabular and dish names in Gloock.",
+      "Do keep healthy states still and warm white: a steady live dot, a neutral test-mode note.",
+      "Do show food photography untinted, with type on plain slate rather than over the photograph."
+    ],
+    "donts": [
+      "Don't build menus as a grid of cards; use featured plates and rows.",
+      "Don't put brass on more than one control in a view, or use it for selection or decoration.",
+      "Don't put a kicker or eyebrow above a heading, or set labels in small spaced capitals; spaced caps belong to the wordmark alone.",
+      "Don't shadow anything but a ticket or a floating bar.",
+      "Don't theme ticket paper, or recolour food photography.",
+      "Don't render the rail as faux metal: it is a flat bar.",
+      "Don't signal state by colour alone, or animate a healthy state.",
+      "Don't add motion beyond the ticket drop without removing something; keep transitions within 150–220ms."
+    ]
+  }
+}
