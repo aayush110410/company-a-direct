@@ -120,8 +120,12 @@ Set these in the Render dashboard. Never commit them.
 - `APP_URL`
 - `DEMO_MODE` (`render.yaml` sets `true` for the review deployment; the app defaults to `false`,
   which hides demo logins and tools and enforces outlet opening hours)
-- `DEMO_USER_PASSWORD`
+- `DEMO_USER_PASSWORD` (set it to the documented demo password, or delete the variable; an empty
+  value fails start-up validation)
 - `NODE_VERSION` (set to `24` by `render.yaml`)
+
+The keep-alive workflow pings `/api/health` every 10 minutes once the repository variable `APP_URL`
+is set (GitHub → Settings → Secrets and variables → Actions → Variables).
 
 ### Deploying from scratch
 
@@ -137,7 +141,9 @@ Set these in the Render dashboard. Never commit them.
 
 2. In Supabase **Authentication → Sign In / Providers → Email**, turn off **Confirm email** (demo
    accounts and reviewer sign-ups must work at once). In **URL Configuration**, set the Site URL to the
-   Render URL.
+   Render URL. In **Rate Limits**, raise the sign-in and verification limits: every request reaches
+   Supabase Auth from Render's single outbound IP, so the per-IP defaults (30 per 5 minutes) would
+   lock out a room of reviewers. The app keeps its own per-client limits in front of it.
 3. Put the hosted URL and keys in a git-ignored `.env.production.local`, then seed:
 
    ```bash
