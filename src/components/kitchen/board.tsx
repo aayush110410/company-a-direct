@@ -63,7 +63,7 @@ export function KitchenBoard({
         </div>
         <KitchenClock />
         <LivePill state={board.connection} className="text-base" />
-        <Button variant="secondary" size="lg" onClick={() => setStockOpen(true)}>
+        <Button variant="secondary" size="xl" onClick={() => setStockOpen(true)}>
           <PackageX className="size-5" aria-hidden />
           Stock
         </Button>
@@ -88,7 +88,7 @@ export function KitchenBoard({
             type="button"
             onClick={() => setTab(c.key)}
             aria-pressed={tab === c.key}
-            className={cn("min-h-14 flex-1 rounded-xl text-base font-semibold", tab === c.key ? "bg-fg text-bg" : "text-muted")}
+            className={cn("min-h-16 flex-1 rounded-xl text-lg font-semibold", tab === c.key ? "bg-fg text-bg" : "text-muted")}
           >
             {c.title} <span className="tabular-nums">{c.orders.length}</span>
           </button>
@@ -148,6 +148,7 @@ function AlertRow({ alert, onDone }: { alert: KitchenAlert; onDone: () => void }
       </p>
       <Button
         variant="secondary"
+        size="xl"
         loading={pending}
         onClick={() =>
           start(async () => {

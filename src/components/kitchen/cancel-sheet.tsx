@@ -21,7 +21,7 @@ function CancelBody({ order, onClose, onDone }: { order: BoardOrder; onClose: ()
       <fieldset className="flex flex-col gap-1">
         <legend className="mb-2 text-base font-medium">Reason</legend>
         {REASONS.map((r) => (
-          <label key={r} className="flex min-h-14 items-center gap-3 border-b border-seam text-base last:border-0">
+          <label key={r} className="flex min-h-16 items-center gap-3 border-b border-seam text-lg last:border-0">
             <input type="radio" name="cancel-reason" checked={reason === r} onChange={() => setReason(r)} className="size-5 accent-[var(--accent)]" />
             {r}
           </label>

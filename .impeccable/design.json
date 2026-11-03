@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-03T07:59:38.862467+00:00",
+  "generatedAt": "2026-11-03T08:30:24+00:00",
   "title": "Design System: Company A",
   "extensions": {
     "colorMeta": {
@@ -472,7 +472,7 @@
       "rail-steel": {
         "role": "secondary",
         "displayName": "Rail Steel",
-        "canonical": "#3d3b36",
+        "canonical": "#3d3a34",
         "tonalRamp": [
           "#201f1d",
           "#413e39",
@@ -558,16 +558,46 @@
           "#eecbba",
           "#faefea"
         ]
+      },
+      "clip-steel": {
+        "role": "secondary",
+        "displayName": "Clip Steel",
+        "canonical": "#5b574e",
+        "tonalRamp": [
+          "#1d1c19",
+          "#3a3832",
+          "#5b574e",
+          "#7a766c",
+          "#98948b",
+          "#b6b3ab",
+          "#d4d2cc",
+          "#f2f1ee"
+        ]
+      },
+      "risk-on-paper": {
+        "role": "tertiary",
+        "displayName": "Risk On Paper",
+        "canonical": "#855404",
+        "tonalRamp": [
+          "#2a1b01",
+          "#553503",
+          "#855404",
+          "#b07311",
+          "#d1953a",
+          "#e2b674",
+          "#efd5ad",
+          "#faf1e3"
+        ]
       }
     },
     "typographyMeta": {
       "display-hero": {
         "displayName": "Display Hero",
-        "purpose": "Home dish line over the photograph; once per product."
+        "purpose": "Home dish line on plain slate beside the photograph; once per product, max 14ch."
       },
       "display": {
         "displayName": "Display",
-        "purpose": "Order-status headline and single-page heroes."
+        "purpose": "Order-status headline; menu outlet name and checkout title use near variants."
       },
       "headline": {
         "displayName": "Headline",
@@ -581,17 +611,9 @@
         "displayName": "Body",
         "purpose": "Descriptions, 46-52ch."
       },
-      "body-strong": {
-        "displayName": "Body Strong",
-        "purpose": "Dish names in menu rows."
-      },
       "meta": {
         "displayName": "Meta",
         "purpose": "Hints, timestamps, addresses, allergens."
-      },
-      "plate-label": {
-        "displayName": "Plate Label",
-        "purpose": "Uppercase section or field label; never a kicker above a headline."
       },
       "figures": {
         "displayName": "Figures",
@@ -599,14 +621,40 @@
       },
       "kitchen-order-id": {
         "displayName": "Kitchen Order Id",
-        "purpose": "Order number in the ticket band, 32px floor."
+        "purpose": "Order number in the kitchen ticket band, 36px bold tabular."
+      },
+      "section-title": {
+        "displayName": "Section Title",
+        "purpose": "Sentence-case heading inside a screen (Your order, Delivery, Pay with, Your ticket on the rail). Replaces any kicker."
+      },
+      "wordmark": {
+        "displayName": "Wordmark",
+        "purpose": "COMPANY A in spaced caps; the only spaced-caps text in the product."
+      },
+      "kitchen-item": {
+        "displayName": "Kitchen Item",
+        "purpose": "Item lines on a kitchen ticket, 24px."
+      },
+      "kitchen-meta": {
+        "displayName": "Kitchen Meta",
+        "purpose": "Timer, flags, add-ons, footer actions on a kitchen ticket, 18px; the ticket minimum."
       }
     },
     "shadows": [
       {
         "name": "hanging-ticket",
         "value": "0 22px 40px -22px rgba(0,0,0,0.9)",
-        "purpose": "Paper tickets only."
+        "purpose": "Full paper tickets on the board and status page."
+      },
+      {
+        "name": "floating-cart-bar",
+        "value": "0 18px 40px -12px rgba(0,0,0,0.7)",
+        "purpose": "Fixed brass cart bar floating over menus."
+      },
+      {
+        "name": "rail-underside",
+        "value": "inset 0 -1px 0 rgba(0,0,0,0.4)",
+        "purpose": "Lower-edge line on the flat rail bar."
       },
       {
         "name": "sheet-overlay",
@@ -623,7 +671,7 @@
       {
         "name": "ticket-drop",
         "value": "ticket-drop 520ms cubic-bezier(0.16, 1, 0.3, 1) both",
-        "purpose": "Paid order lands on the status rail; new ticket on the kitchen board."
+        "purpose": "Customer's own mini ticket after payment; new kitchen ticket (plus 4px brass ring at 70% for 1.2s and a chime)."
       },
       {
         "name": "shimmer",
@@ -665,13 +713,20 @@
       {
         "name": "kitchen",
         "selector": "[data-theme=\"kitchen\"]",
-        "purpose": "Kitchen board: darker grounds, paper tickets."
+        "purpose": "Kitchen board: darker grounds, 1.5rem base; paper tickets on per-column rails."
+      },
+      {
+        "name": "color-redeclare",
+        "selector": "[data-theme]",
+        "purpose": "Every themed scope re-declares --color-* role tokens so nested themes re-skin their subtree."
       }
     ],
     "kitchenFloor": {
-      "bodyMinPx": 24,
-      "orderIdMinPx": 32,
-      "tapTargetMinPx": 64,
+      "orderIdPx": 36,
+      "itemLinePx": 24,
+      "bandStatusPx": 20,
+      "secondaryLineMinPx": 18,
+      "kitchenControlMinPx": 64,
       "colourNeverOnlySignal": true
     }
   },
@@ -709,14 +764,6 @@
       "css": ".ds-seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;padding:4px;border:1px solid #35332e;border-radius:12px;background:#1c1b19}.ds-seg button{min-height:44px;border:0;border-radius:8px;background:transparent;color:#a39c91;font:600 14px 'Hanken Grotesk',system-ui,sans-serif;transition:color 150ms ease-out;cursor:pointer}.ds-seg button:hover{color:#f2eee6}.ds-seg button[aria-checked=true]{background:#f2eee6;color:#141312}"
     },
     {
-      "name": "LivePill",
-      "kind": "chip",
-      "refersTo": "live-pill",
-      "description": "Realtime connection state, dot plus word.",
-      "html": "<span class=\"ds-live\"><i></i>Live</span>",
-      "css": ".ds-live{display:inline-flex;align-items:center;gap:8px;padding:4px 12px;border:1px solid rgb(63 143 90 / .5);border-radius:9999px;color:#7cc394;font:500 14px 'Hanken Grotesk',system-ui,sans-serif}.ds-live i{width:8px;height:8px;border-radius:50%;background:#3f8f5a}"
-    },
-    {
       "name": "Menu Row",
       "kind": "card",
       "refersTo": "menu-row-photo",
@@ -725,24 +772,48 @@
       "css": ".ds-row{display:flex;align-items:center;gap:16px;width:100%;padding:16px 0;border:0;border-bottom:1px solid #35332e;background:none;color:#f2eee6;text-align:left;font-family:'Hanken Grotesk',system-ui,sans-serif;cursor:pointer}.ds-row-ph{width:80px;height:80px;border-radius:12px;background:#1c1b19;flex-shrink:0}.ds-row-t{flex:1;display:flex;flex-direction:column;gap:4px}.ds-row-t b{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:600}.ds-row-t small{font-size:14px;color:#a39c91}.ds-row-p{font-weight:600;font-variant-numeric:tabular-nums}.ds-row:focus-visible{outline:2px solid #c9a46a;outline-offset:3px}"
     },
     {
+      "name": "LivePill",
+      "kind": "chip",
+      "refersTo": "live-pill",
+      "description": "Realtime connection state: steady warm white dot plus word; risk/late only when degraded.",
+      "html": "<span class=\"ds-live\"><i></i>Live</span>",
+      "css": ".ds-live{display:inline-flex;align-items:center;gap:8px;padding:4px 12px;border:1px solid #35332e;border-radius:9999px;color:#f2eee6;font:500 14px 'Hanken Grotesk',system-ui,sans-serif}.ds-live i{width:8px;height:8px;border-radius:50%;background:#f2eee6}"
+    },
+    {
       "name": "Paper Ticket",
       "kind": "custom",
       "refersTo": "ticket",
-      "description": "Signature: the order as a paper slip on the rail, shared by kitchen and customer.",
-      "html": "<article class=\"ds-ticket\"><header><span>1042</span><span>Ready by 8:25 pm</span></header><ul><li><b>2&times;</b> Chicken dum biryani</li><li><b>1&times;</b> Mirchi ka salan</li></ul><div class=\"ds-ticket-act\"><button>Start</button></div></article>",
-      "css": ".ds-ticket{max-width:320px;border-radius:6px;overflow:hidden;background:#f4f1ea;color:#161514;box-shadow:0 22px 40px -22px rgba(0,0,0,.9);font-family:'Hanken Grotesk',system-ui,sans-serif}.ds-ticket header{display:flex;justify-content:space-between;align-items:baseline;padding:10px 16px;background:#34312b;color:#f4f1ea}.ds-ticket header span:first-child{font-size:32px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}.ds-ticket header span:last-child{font-weight:600}.ds-ticket ul{list-style:none;margin:0;padding:12px 16px 8px;font-size:24px}.ds-ticket-act{border-top:1px solid #ddd7cb;padding:12px}.ds-ticket-act button{width:100%;height:64px;border:0;border-radius:12px;background:#161514;color:#f4f1ea;font:600 18px 'Hanken Grotesk',system-ui,sans-serif;transition:background-color 150ms ease-out,transform 150ms ease-out;cursor:pointer}.ds-ticket-act button:hover{background:#2a2826}.ds-ticket-act button:active{transform:scale(.98)}.ds-ticket-act button:focus-visible{outline:2px solid #c9a46a;outline-offset:3px}"
+      "description": "Signature: the order as a paper slip; clipped only when it touches the rail. Shared by kitchen and customer.",
+      "html": "<div class=\"ds-rail\"></div><article class=\"ds-ticket\"><span class=\"ds-clip\"></span><header><span>778466</span><span>Ready by 2:15 pm</span></header><ul><li><b>2&times;</b> Chicken dum biryani</li><li><b>1&times;</b> Mirchi ka salan</li></ul><p class=\"ds-meta\">2 min in</p><div class=\"ds-ticket-act\"><button>Start</button></div></article>",
+      "css": ".ds-rail{max-width:320px;height:10px;border-radius:9999px;background:#3d3a34;box-shadow:inset 0 -1px 0 rgba(0,0,0,.4)}.ds-ticket{position:relative;max-width:320px;margin-top:12px;border-radius:0 0 6px 6px;background:#f4f1ea;color:#161514;box-shadow:0 22px 40px -22px rgba(0,0,0,.9);font-family:'Hanken Grotesk',system-ui,sans-serif}.ds-clip{position:absolute;top:-12px;left:50%;width:48px;height:16px;transform:translateX(-50%);border-radius:0 0 6px 6px;background:#5b574e}.ds-ticket header{display:flex;flex-direction:column;gap:4px;padding:12px 16px;background:#34312b;color:#f4f1ea}.ds-ticket header span:first-child{font-size:36px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}.ds-ticket header span:last-child{font-size:20px;font-weight:600;line-height:1.25}.ds-ticket ul{list-style:none;margin:0;padding:12px 16px 8px;font-size:24px;line-height:1.375}.ds-meta{margin:0;padding:0 16px 12px;font-size:18px;color:#5e5a52;font-variant-numeric:tabular-nums}.ds-ticket-act{border-top:1px solid #ddd7cb;padding:12px}.ds-ticket-act button{width:100%;height:64px;border:0;border-radius:12px;background:#161514;color:#f4f1ea;font:600 18px 'Hanken Grotesk',system-ui,sans-serif;transition:background-color 150ms ease-out,transform 150ms ease-out;cursor:pointer}.ds-ticket-act button:hover{background:#2a2826}.ds-ticket-act button:active{transform:scale(.98)}.ds-ticket-act button:focus-visible{outline:2px solid #c9a46a;outline-offset:3px}"
+    },
+    {
+      "name": "Mini Ticket Rail",
+      "kind": "custom",
+      "refersTo": "mini-ticket",
+      "description": "Customer status page: up to 4 anonymous tickets, +N, then the customer's own brass-ringed ticket.",
+      "html": "<div class=\"ds-mrail\"></div><div class=\"ds-mrow\"><span class=\"ds-mt\"><i></i><b></b></span><span class=\"ds-mt\"><i></i><b></b></span><span class=\"ds-more\">+3</span><span class=\"ds-mt ds-mine\"><i></i><b></b><em>470</em></span></div><p class=\"ds-cap\">7 tickets ahead of yours.</p>",
+      "css": ".ds-mrail{max-width:320px;height:10px;border-radius:9999px;background:#3d3a34;box-shadow:inset 0 -1px 0 rgba(0,0,0,.4)}.ds-mrow{display:flex;align-items:flex-start;gap:8px}.ds-mt{position:relative;display:block;width:44px;height:56px;border-radius:0 0 6px 6px;background:rgb(244 241 234/.3)}.ds-mt i{position:absolute;top:-8px;left:50%;width:20px;height:12px;transform:translateX(-50%);border-radius:0 0 4px 4px;background:rgb(91 87 78/.7)}.ds-mt b{display:block;height:20px;background:rgb(52 49 43/.6)}.ds-mine{background:#f4f1ea;box-shadow:0 0 0 2px #b08d57}.ds-mine i{background:#b08d57}.ds-mine b{background:#34312b}.ds-mine em{display:block;padding-top:4px;text-align:center;font:700 12px 'Hanken Grotesk',system-ui,sans-serif;font-style:normal;color:#161514;font-variant-numeric:tabular-nums}.ds-more{padding-top:16px;font:14px 'Hanken Grotesk',system-ui,sans-serif;color:#a39c91}.ds-cap{margin:12px 0 0;font:14px 'Hanken Grotesk',system-ui,sans-serif;color:#a39c91}"
+    },
+    {
+      "name": "Section Title",
+      "kind": "custom",
+      "refersTo": "section-title",
+      "description": "Sentence-case section heading; never a kicker.",
+      "html": "<h2 class=\"ds-st\">Your order</h2>",
+      "css": ".ds-st{margin:0;font:650 18px/1.4 'Hanken Grotesk',system-ui,sans-serif;letter-spacing:-.01em;color:#f2eee6}"
     }
   ],
   "narrative": {
     "northStar": "The Pass at Night",
-    "overview": "Company A is a chef's open kitchen after dark. The customer stands at the pass: slate and steel surfaces joined by 1px seams, warm white type, food lit in full colour against the dark, and exactly one brass control that says what to do next. When the order is paid it becomes a paper ticket, the same object the cooks read, and clips onto that outlet's steel rail. The kitchen display is the same world seen from the line: darker slate, paper tickets hanging in four columns, a steel, amber or red band across each ticket's head that tells urgency from two metres away. Admin is the same company's daytime office: a paper ledger, ink type, deep brass for its one primary action. Three themes, one material vocabulary (slate, steel, paper, ink, brass) and one pair of typefaces. The build refuses the orange delivery-app card grid: menus are rows and one featured plate per category, not tiles.",
+    "overview": "Company A is a chef's open kitchen after dark. The customer stands at the pass: slate and steel surfaces joined by 1px seams, warm white type, food lit in full colour against the dark, and exactly one brass control that says what to do next. Once paid, the order is a paper ticket hanging on that outlet's steel rail, the same paper ticket component the cooks read. On the customer's status page the rail shows the queue ahead as small anonymous tickets with the customer's own ringed in brass, and the full receipt sits below it. The kitchen display is the same world seen from the line: darker slate, four columns, each with its own rail and tickets hanging from it, a steel, amber or red band across each ticket's head that tells urgency from two metres away. Admin is the same company's daytime office: a paper ledger, ink type, deep brass for its one primary action.\n\nThree themes, one material vocabulary (slate, steel, paper, ink, brass) and one pair of typefaces. The build refuses the orange delivery-app card grid: menus are rows and one featured plate per category, not tiles. Headings are plain sentence case; there are no uppercase eyebrows anywhere in the product. The only spaced capitals are the \"COMPANY A\" wordmark.",
     "keyCharacteristics": [
       "Dark, warm-neutral customer surfaces; tonal layering by seams, not shadows.",
       "One brass action per view; everything else is warm white, ash or outline.",
-      "Paper tickets are the signature object, shared by the order status screen and the kitchen board.",
+      "Paper tickets on a steel rail are the signature object, shared by the status page and the kitchen board.",
       "Gloock for dish names, headlines and the arrival time; Hanken Grotesk with tabular figures for everything operational.",
       "Untinted food photography is the only colour field on customer screens.",
-      "One authored moment per surface (ticket drop); every other transition is 150–220 ms ease-out-expo."
+      "One authored moment per surface (ticket drop); every other transition is 150-220 ms."
     ],
     "rules": [
       {
@@ -752,17 +823,17 @@
       },
       {
         "name": "The Signal Is Not Text Rule",
-        "body": "Signal colours fill bands, dots and borders. Words that carry status use `--ok-text`, `--risk-text`, `--late-text` for the current theme, which are tuned for AA on that theme's ground.",
+        "body": "Signal colours fill bands, dots and borders. Words that carry status use the current theme's status-text token, or risk-on-paper on a ticket.",
         "section": "colors"
       },
       {
-        "name": "The Fixed Paper Rule",
-        "body": "Ticket paper and ink are the same in every theme. Do not theme a ticket.",
+        "name": "The Quiet Live Rule",
+        "body": "A healthy state is warm white and still: the live dot does not pulse, the Track order dot is warm white, money lines are warm white. Colour arrives only when something needs attention.",
         "section": "colors"
       },
       {
         "name": "The Chalkboard Rule",
-        "body": "Gloock is for names and times a person reads once and remembers. Buttons, forms, tables, numbers and kitchen ticket bodies are Hanken Grotesk.",
+        "body": "Gloock is for names and times a person reads once and remembers. Buttons, forms, tables, numbers and ticket bodies are Hanken Grotesk.",
         "section": "typography"
       },
       {
@@ -771,32 +842,35 @@
         "section": "typography"
       },
       {
-        "name": "The Plate Rule",
-        "body": "A plate label is a section heading or a field label. It never sits above a headline as a kicker.",
+        "name": "The No Kicker Rule",
+        "body": "A section is named by a sentence-case Section Title. Nothing sits above a heading to introduce it, and no label is set in small spaced capitals.",
         "section": "typography"
       },
       {
         "name": "The Seam Not Shadow Rule",
-        "body": "Panels, rows, fields and cards separate by 1px seams and tonal steps. Only tickets cast a shadow.",
+        "body": "Panels, rows, fields and cards separate by 1px seams and tonal steps. Only a ticket or a floating bar casts a shadow.",
         "section": "elevation"
       }
     ],
     "dos": [
       "Do give each view one brass action, and keep selection states in warm white.",
-      "Do set status words in `--ok-text`, `--risk-text`, `--late-text` and keep signal colours for bands, dots and borders.",
+      "Do set status words in `--ok-text`, `--risk-text`, `--late-text`, or risk-on-paper on a ticket; keep signal colours for bands, dots and borders.",
       "Do re-declare the `--color-*` role tokens in any new `[data-theme]` scope.",
-      "Do use the paper ticket for anything that represents an order, with its band, tabular id and written status.",
+      "Do use the shared paper ticket for anything that represents an order: band, number line, written status line.",
+      "Do clip a ticket only where it touches the rail.",
+      "Do name sections with a sentence-case Section Title (650, 1.125rem).",
       "Do keep numbers tabular and dish names in Gloock.",
-      "Do meet the kitchen floor: 24px body, 32px order id, 64px targets.",
-      "Do show food photography untinted and route remote photos through the image loader."
+      "Do keep healthy states still and warm white: a steady live dot, a neutral test-mode note.",
+      "Do show food photography untinted, with type on plain slate rather than over the photograph."
     ],
     "donts": [
       "Don't build menus as a grid of cards; use featured plates and rows.",
-      "Don't put brass on more than one control in a view, or use brass as decoration.",
-      "Don't put a plate label above a headline as a kicker.",
-      "Don't shadow anything but a ticket.",
+      "Don't put brass on more than one control in a view, or use it for selection or decoration.",
+      "Don't put a kicker or eyebrow above a heading, or set labels in small spaced capitals; spaced caps belong to the wordmark alone.",
+      "Don't shadow anything but a ticket or a floating bar.",
       "Don't theme ticket paper, or recolour food photography.",
-      "Don't signal state by colour alone.",
+      "Don't render the rail as faux metal: it is a flat bar.",
+      "Don't signal state by colour alone, or animate a healthy state.",
       "Don't add motion beyond the ticket drop without removing something; keep transitions within 150–220ms."
     ]
   }
