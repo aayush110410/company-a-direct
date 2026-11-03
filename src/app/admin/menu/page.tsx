@@ -1,6 +1,11 @@
-import { requireRole } from "@/server/auth";
+import { connection } from "next/server";
+import { ItemTable } from "@/components/admin/item-table";
+import { getAdminLookups, listItems } from "@/server/repo/admin";
+
+export const metadata = { title: "Menu" };
 
 export default async function AdminMenuPage() {
-  const session = await requireRole(["admin"], "/admin/menu");
-  return <main className="p-8">Menu admin for {session.fullName}</main>;
+  await connection();
+  const [items, lookups] = await Promise.all([listItems(), getAdminLookups()]);
+  return <ItemTable items={items} cities={lookups.cities} categories={lookups.categories} outletCount={lookups.outlets.length} />;
 }

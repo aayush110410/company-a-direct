@@ -278,7 +278,7 @@ function Row({ label, value, accent }: { label: string; value: React.ReactNode; 
   return (
     <div className="flex items-baseline justify-between">
       <dt className="text-muted">{label}</dt>
-      <dd className={cn("tabular-nums", accent && "text-[#7cc394]")}>{value}</dd>
+      <dd className={cn("tabular-nums", accent && "text-[var(--ok-text)]")}>{value}</dd>
     </div>
   );
 }

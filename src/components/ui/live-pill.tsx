@@ -9,7 +9,7 @@ export function LivePill({ state, className }: { state: keyof typeof LABEL; clas
       aria-live="polite"
       className={cn(
         "inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm font-medium",
-        state === "live" ? "border-ok/50 text-[#7cc394]" : state === "reconnecting" ? "border-risk/60 text-risk" : "border-late/70 text-[#e0705f]",
+        state === "live" ? "border-ok/50 text-[var(--ok-text)]" : state === "reconnecting" ? "border-risk/60 text-[var(--risk-text)]" : "border-late/70 text-[var(--late-text)]",
         className,
       )}
     >

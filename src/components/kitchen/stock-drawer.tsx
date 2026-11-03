@@ -52,7 +52,7 @@ export function StockDrawer({
                 aria-checked={!out}
                 aria-label={`${item.name} in stock`}
                 onClick={() => toggle(item)}
-                className={cn("min-h-12 min-w-32 rounded-xl border px-4 text-base font-semibold", out ? "border-late/70 text-[#e0705f]" : "border-ok/60 text-[#7cc394]")}
+                className={cn("min-h-12 min-w-32 rounded-xl border px-4 text-base font-semibold", out ? "border-late/70 text-[var(--late-text)]" : "border-ok/60 text-[var(--ok-text)]")}
               >
                 {out ? "Sold out" : "In stock"}
               </button>

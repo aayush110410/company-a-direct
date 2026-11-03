@@ -142,7 +142,7 @@ function AlertRow({ alert, onDone }: { alert: KitchenAlert; onDone: () => void }
   return (
     <div role="alert" className="flex flex-wrap items-center justify-between gap-3">
       <p className="flex items-center gap-3 text-[1.125rem] font-semibold">
-        <BellRing className="size-5 text-[#e0705f]" aria-hidden />
+        <BellRing className="size-5 text-[var(--late-text)]" aria-hidden />
         {alert.message}. The customer has been sent a new estimate.
       </p>
       <Button

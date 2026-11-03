@@ -6,7 +6,8 @@
  * Kitchen tickets are paper on a steel rail. Admin works on paper (daytime office).
  */
 
-@theme {
+/* `inline` makes utilities reference the variables directly, so a nested [data-theme] can re-skin a subtree. */
+@theme inline {
   --font-display: var(--font-gloock), ui-serif, Georgia, serif;
   --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
 
@@ -52,6 +53,9 @@
   --accent-strong: #c9a46a;
   --on-accent: #141312;
   --danger: #e0705f;
+  --ok-text: #7cc394;
+  --risk-text: #e0a526;
+  --late-text: #e0705f;
 }
 
 /* Admin: paper ledger in a daytime office. */
@@ -67,6 +71,9 @@
   --accent-strong: #5a421d;
   --on-accent: #fbf9f4;
   --danger: #a5352a;
+  --ok-text: #2b6a41;
+  --risk-text: #855404;
+  --late-text: #a5352a;
 }
 
 /* Kitchen: same world, steel rail, read from two metres. */
@@ -75,6 +82,24 @@
   --surface: #1a1917;
   --raised: #24231f;
   font-size: 1.5rem;
+}
+
+/*
+ * A custom property that references another is resolved where it is declared. Re-declaring the
+ * colour tokens inside each themed scope makes nested themes (admin paper, kitchen) re-skin
+ * their subtree, whatever Tailwind emits for the utilities.
+ */
+[data-theme] {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-seam: var(--seam);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-on-accent: var(--on-accent);
+  --color-danger: var(--danger);
 }
 
 @keyframes ticket-drop {
