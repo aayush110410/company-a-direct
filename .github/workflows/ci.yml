@@ -39,7 +39,8 @@ jobs:
           cache: pnpm
       - uses: supabase/setup-cli@v1
         with:
-          version: latest
+          # Pinned to the CLI the project is developed with; v3 drops config keys this config.toml uses.
+          version: 2.84.2
       - run: pnpm install --frozen-lockfile
       - run: supabase start
       - name: Write .env.local from the local stack
