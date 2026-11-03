@@ -35,6 +35,9 @@ const STAGES = [
   { key: "delivered", label: "Delivered", at: (o: OrderView) => o.deliveredAt },
 ] as const;
 
+
+/** Mini tickets shown before the rest collapse to a count; fits a 360 px phone. */
+const MAX_MINI = 4;
 export function OrderStatusScreen({ initial, justPaid }: { initial: OrderView; justPaid: boolean }) {
   const { order, connection } = useLiveOrder(initial.id, initial);
   const now = useNow(15_000);
@@ -111,10 +114,12 @@ export function OrderStatusScreen({ initial, justPaid }: { initial: OrderView; j
         {/* The outlet's rail: the queue ahead (anonymous) and your ticket, clipped on. */}
         <Rail caption={railCaption(order)}>
           <div className="flex items-start gap-2">
-            {Array.from({ length: Math.min(order.ticketsAhead ?? 0, 6) }, (_, i) => (
+            {Array.from({ length: Math.min(order.ticketsAhead ?? 0, MAX_MINI) }, (_, i) => (
               <MiniTicket key={i} />
             ))}
-            {(order.ticketsAhead ?? 0) > 6 && <span className="pt-4 text-sm text-muted">+{(order.ticketsAhead ?? 0) - 6}</span>}
+            {(order.ticketsAhead ?? 0) > MAX_MINI && (
+              <span className="pt-4 text-sm text-muted tabular-nums">+{(order.ticketsAhead ?? 0) - MAX_MINI}</span>
+            )}
             <MiniTicket mine number={order.id} dropped={justPaid} />
           </div>
         </Rail>
@@ -124,6 +129,7 @@ export function OrderStatusScreen({ initial, justPaid }: { initial: OrderView; j
               status={STAGE_LABEL[order.status] ?? label}
               tone={late ? "late" : "steel"}
               size="customer"
+              clip={false}
               className="mt-6"
             >
               <ul className="flex flex-col gap-1.5 px-4 py-3">

@@ -111,8 +111,9 @@ export function KitchenBoard({
                   {c.key === "placed" ? "No new tickets. New orders drop in here with a chime." : "Nothing here."}
                 </p>
               ) : (
-                c.orders.map((o) => (
+                c.orders.map((o, i) => (
                   <Ticket
+                    onRail={i === 0}
                     key={o.id}
                     order={o}
                     now={now}

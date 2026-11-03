@@ -23,6 +23,7 @@ export function Ticket({
   onAdjust,
   onCancel,
   onMoved,
+  onRail = true,
 }: {
   order: BoardOrder;
   now: Date;
@@ -32,6 +33,8 @@ export function Ticket({
   onAdjust: () => void;
   onCancel: () => void;
   onMoved: () => void;
+  /** First in its column, so its clip sits on the rail. */
+  onRail?: boolean;
 }) {
   const [pending, start] = useTransition();
   const [dropped, setDropped] = useState(isNew);
@@ -82,6 +85,7 @@ export function Ticket({
       tone={TONE[urgency]}
       dropped={dropped}
       muted={withRider}
+      clip={onRail}
       className={dropped ? "ring-4 ring-accent/70" : undefined}
     >
       {!withRider && (

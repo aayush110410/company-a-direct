@@ -23,6 +23,7 @@ export function TicketPaper({
   size = "kitchen",
   className,
   label,
+  clip = true,
 }: {
   number: string;
   status: ReactNode;
@@ -33,6 +34,8 @@ export function TicketPaper({
   size?: "kitchen" | "customer";
   className?: string;
   label: string;
+  /** Only the ticket touching the rail gets a clip; others hang under it or stand alone. */
+  clip?: boolean;
 }) {
   return (
     <article
@@ -45,7 +48,7 @@ export function TicketPaper({
       )}
     >
       {/* The clip that holds the ticket on the rail. */}
-      <span aria-hidden className="absolute -top-3 left-1/2 h-4 w-12 -translate-x-1/2 rounded-b-md bg-[#5b574e]" />
+      {clip && <span aria-hidden className="absolute -top-3 left-1/2 h-4 w-12 -translate-x-1/2 rounded-b-md bg-[#5b574e]" />}
       {/* Number on its own line so neither it nor the status ever wraps mid-phrase on a narrow column. */}
       <header className={cn("flex flex-col gap-1 px-4", size === "kitchen" ? "py-3" : "py-2.5", BAND[tone])}>
         <span className={cn("leading-none font-bold tracking-[-0.02em] tabular-nums", size === "kitchen" ? "text-[2.25rem]" : "text-2xl")}>{number}</span>
@@ -69,7 +72,7 @@ export function MiniTicket({ number, mine = false, dropped = false }: { number?:
     >
       <span className={cn("absolute -top-2 left-1/2 h-3 w-5 -translate-x-1/2 rounded-b", mine ? "bg-accent" : "bg-[#5b574e]/70")} />
       <span className={cn("block h-5", mine ? "bg-[#34312b]" : "bg-[#34312b]/60")} />
-      {mine && number && <span className="block pt-1 text-center text-[0.625rem] font-bold text-ink tabular-nums">{number.slice(-3)}</span>}
+      {mine && number && <span className="block pt-1 text-center text-xs font-bold text-ink tabular-nums">{number.slice(-3)}</span>}
     </span>
   );
 }
