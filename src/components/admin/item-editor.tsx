@@ -8,7 +8,7 @@ import { type ReactNode, useEffect, useRef, useState, useTransition } from "reac
 import { toast } from "sonner";
 import { createPhotoUploadUrl, saveMenuItem, setAvailability, setItemActive } from "@/app/admin/actions";
 import { Button, DietMark, Field, Segmented } from "@/components/ui";
-import { ALLERGENS } from "@/server/admin/menu-schema";
+import { ALLERGENS } from "@/domain/allergens";
 import type { getAdminLookups, getItemForEdit } from "@/server/repo/admin";
 import { createBrowserClient } from "@/server/supabase/browser";
 import { cn } from "@/lib/cn";

@@ -1,6 +1,7 @@
 import { z } from "zod";
+import { ALLERGENS } from "@/domain/allergens";
 
-export const ALLERGENS = ["dairy", "nuts", "gluten", "egg", "fish", "soy", "sesame", "mustard"] as const;
+export { ALLERGENS };
 
 /** Validates a menu item from the admin editor. Prices are entered in rupees; every city needs one. */
 export function makeMenuItemSchema(cityIds: string[]) {
