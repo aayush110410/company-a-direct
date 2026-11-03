@@ -7,9 +7,10 @@ import { publicEnv } from "@/lib/env.public";
  */
 const schema = z.object({
   APP_URL: z.url().default("http://localhost:3000"),
+  // Off unless asked for: demo logins, demo tools and round-the-clock ordering are opt-in.
   DEMO_MODE: z
     .enum(["true", "false"])
-    .default("true")
+    .default("false")
     .transform((v) => v === "true"),
   SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
   // A documented demo credential for reviewer accounts, not a secret.

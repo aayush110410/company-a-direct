@@ -118,7 +118,8 @@ Set these in the Render dashboard. Never commit them.
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY` (server only)
 - `APP_URL`
-- `DEMO_MODE`
+- `DEMO_MODE` (`render.yaml` sets `true` for the review deployment; the app defaults to `false`,
+  which hides demo logins and tools and enforces outlet opening hours)
 - `DEMO_USER_PASSWORD`
 - `NODE_VERSION` (set to `24` by `render.yaml`)
 

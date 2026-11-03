@@ -91,7 +91,9 @@ export function orderDeps(): OrderDeps {
         .select("id", { count: "exact", head: true })
         .eq("coupon_code", code)
         .eq("customer_id", customerId)
-        .not("status", "in", "(expired,cancelled)");
+        // Only paid, uncancelled orders use a coupon; an abandoned checkout gives it back.
+        .not("paid_at", "is", null)
+        .neq("status", "cancelled");
       return count ?? 0;
     },
 

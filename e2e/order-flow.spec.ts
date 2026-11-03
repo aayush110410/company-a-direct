@@ -62,6 +62,11 @@ test.describe("ordering direct", () => {
     await page.getByRole("button", { name: /^Pay ₹/ }).click();
     await page.waitForURL(/\/pay\//);
 
+    // An unpaid order has no status page yet: its link leads back to paying.
+    const payUrl = page.url();
+    await page.goto(payUrl.replace("/pay/", "/orders/"));
+    await page.waitForURL(payUrl);
+
     await page.getByRole("button", { name: "A failed payment" }).click();
     await expect(page.getByText(/No money was taken/)).toBeVisible();
     await page.getByRole("button", { name: /^Pay ₹/ }).click();
