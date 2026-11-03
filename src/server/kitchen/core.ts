@@ -15,7 +15,8 @@ export type KitchenDeps = {
   ): Promise<{ outletId: string; status: OrderStatus; promisedAt: Date; travelMinutes: number; customerPhone: string } | null>;
   transition(id: string, from: OrderStatus, to: OrderStatus, actor: string, reason?: string): Promise<boolean>;
   overridePromise(id: string, promisedAt: Date, readyBy: Date, reason: string, actor: string): Promise<boolean>;
-  upsertStock(outletId: string, itemId: string, status: "available" | "out_of_stock", actor: string): Promise<void>;
+  /** Never overrides a row the menu admin set to hidden; says so instead. */
+  upsertStock(outletId: string, itemId: string, status: "available" | "out_of_stock", actor: string): Promise<"saved" | "hidden">;
   ackAlert(alertId: string, outletId: string | null, actor: string): Promise<boolean>;
   enqueue(msg: OutboxMessage): Promise<void>;
 };
@@ -109,7 +110,8 @@ export async function setItemStockCore(
 ): Promise<ActionResult<{ status: "available" | "out_of_stock" }>> {
   const outletId = session.role === "admin" ? input.outletId : session.outletId;
   if (!outletId) return fail("Choose an outlet first");
-  await deps.upsertStock(outletId, input.itemId, input.status, session.userId);
+  const saved = await deps.upsertStock(outletId, input.itemId, input.status, session.userId);
+  if (saved === "hidden") return fail("Hidden by the menu admin");
   return ok({ status: input.status });
 }
 

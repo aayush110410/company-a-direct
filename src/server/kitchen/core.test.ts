@@ -17,7 +17,7 @@ function deps(over: Partial<KitchenDeps> = {}): KitchenDeps {
     })),
     transition: vi.fn(async () => true),
     overridePromise: vi.fn(async () => true),
-    upsertStock: vi.fn(async () => {}),
+    upsertStock: vi.fn(async () => "saved" as const),
     ackAlert: vi.fn(async () => true),
     enqueue: vi.fn(async () => {}),
     ...over,
@@ -83,6 +83,12 @@ describe("setItemStockCore", () => {
     const d = deps();
     await setItemStockCore({ itemId: "i1", status: "available" }, kitchen, d);
     expect(d.upsertStock).toHaveBeenCalledWith("o1", "i1", "available", "u1");
+  });
+
+  it("cannot bring back a dish the menu admin hid", async () => {
+    const d = deps({ upsertStock: vi.fn(async () => "hidden" as const) });
+    const r = await setItemStockCore({ itemId: "i1", status: "available" }, kitchen, d);
+    expect(r).toMatchObject({ ok: false, error: "Hidden by the menu admin" });
   });
 
   it("needs an outlet", async () => {

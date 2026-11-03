@@ -45,10 +45,31 @@ export function kitchenDeps(): KitchenDeps {
       return data === true;
     },
     async upsertStock(outletId, itemId, status, actor) {
-      const { error } = await db
+      const row = { status, updated_by: actor, updated_at: new Date().toISOString() };
+      // The status guard is in the same statement, so a hide can't be overwritten in between.
+      const { data, error } = await db
         .from("outlet_item_availability")
-        .upsert({ outlet_id: outletId, item_id: itemId, status, updated_by: actor, updated_at: new Date().toISOString() });
+        .update(row)
+        .eq("outlet_id", outletId)
+        .eq("item_id", itemId)
+        .neq("status", "hidden")
+        .select("item_id");
       if (error) throw new Error(`stock: ${error.message}`);
+      if ((data?.length ?? 0) > 0) return "saved";
+
+      const { data: existing } = await db
+        .from("outlet_item_availability")
+        .select("status")
+        .eq("outlet_id", outletId)
+        .eq("item_id", itemId)
+        .maybeSingle();
+      if (existing?.status === "hidden") return "hidden";
+
+      const { error: insertError } = await db
+        .from("outlet_item_availability")
+        .upsert({ outlet_id: outletId, item_id: itemId, ...row }, { onConflict: "outlet_id,item_id", ignoreDuplicates: true });
+      if (insertError) throw new Error(`stock: ${insertError.message}`);
+      return "saved";
     },
     async ackAlert(alertId, outletId, actor) {
       let q = db.from("alerts").update({ acknowledged_at: new Date().toISOString(), acknowledged_by: actor }).eq("id", alertId);
