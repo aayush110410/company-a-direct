@@ -39,13 +39,14 @@ export function subscribeTable<Row>(
     const { data } = await client.auth.getSession();
     await client.realtime.setAuth(data.session?.access_token ?? null);
 
-    channel = client
+    const ch: RealtimeChannel = client
       .channel(`${topic}:${attempt}`)
       .on("postgres_changes", { event: "*", schema: "public", table: opts.table, filter: opts.filter }, (p) =>
         opts.onChange({ eventType: p.eventType, new: (p.new as Row) ?? null, old: (p.old as Partial<Row>) ?? null }),
       )
       .subscribe((status) => {
-        if (stopped) return;
+        // Removing a replaced channel fires its CLOSED callback; only the current channel may react.
+        if (stopped || ch !== channel) return;
         if (status === "SUBSCRIBED") {
           attempt = 0;
           opts.onStatus("live", true);
@@ -54,6 +55,7 @@ export function subscribeTable<Row>(
           scheduleReconnect();
         }
       });
+    channel = ch;
   };
 
   const scheduleReconnect = () => {
@@ -61,7 +63,9 @@ export function subscribeTable<Row>(
     const delay = Math.min(30_000, 1_000 * 2 ** attempt++);
     retry = setTimeout(async () => {
       retry = undefined;
-      if (channel) await client.removeChannel(channel);
+      const old = channel;
+      channel = null;
+      if (old) await client.removeChannel(old);
       void connect();
     }, delay);
   };
@@ -70,6 +74,8 @@ export function subscribeTable<Row>(
   return () => {
     stopped = true;
     if (retry) clearTimeout(retry);
-    if (channel) void client.removeChannel(channel);
+    const old = channel;
+    channel = null;
+    if (old) void client.removeChannel(old);
   };
 }
