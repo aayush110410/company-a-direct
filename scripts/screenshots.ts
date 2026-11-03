@@ -4,6 +4,7 @@
  */
 import { mkdirSync } from "node:fs";
 import { type Browser, chromium, type Page } from "@playwright/test";
+import { adminClientForScripts } from "./lib/admin-client";
 
 const BASE = "http://localhost:3000";
 const out = process.argv[2] ?? "docs/screenshots";
@@ -25,6 +26,8 @@ async function session(browser: Browser, label: string | null, viewport: { width
 
 async function shot(page: Page, name: string, full = false) {
   await page.waitForLoadState("networkidle").catch(() => {});
+  // Full-page captures stitch from the top; start there so sticky headers land at y=0.
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.waitForTimeout(600);
   await page.screenshot({ path: `${out}/${name}.png`, fullPage: full });
   console.log(`saved ${name}`);
@@ -57,6 +60,36 @@ async function main() {
     await page.waitForURL(/\/orders\//);
     await shot(page, `06-status-${suffix}`, suffix === "mobile");
     await context.close();
+  }
+
+  // Put one at-risk and one late ticket on the Kondapur rail, and raise the late alert, so urgency is visible.
+  {
+    const db = adminClientForScripts();
+    const { data: kondapur } = await db.from("outlets").select("id").eq("slug", "kondapur").single();
+    const { data: open } = await db
+      .from("orders")
+      .select("id, travel_minutes")
+      .eq("outlet_id", kondapur!.id)
+      .in("status", ["placed", "preparing"])
+      .order("paid_at")
+      .limit(2);
+    const now = Date.now();
+    const [late, risky] = open ?? [];
+    if (late) {
+      const promised = new Date(now - 11 * 60_000);
+      await db
+        .from("orders")
+        .update({ promised_at: promised.toISOString(), ready_by: new Date(promised.getTime() - late.travel_minutes * 60_000).toISOString() })
+        .eq("id", late.id);
+      await db.rpc("run_order_jobs", { p_order_ids: [late.id] });
+    }
+    if (risky) {
+      const readyBy = new Date(now + 3 * 60_000);
+      await db
+        .from("orders")
+        .update({ ready_by: readyBy.toISOString(), promised_at: new Date(readyBy.getTime() + risky.travel_minutes * 60_000).toISOString() })
+        .eq("id", risky.id);
+    }
   }
 
   {

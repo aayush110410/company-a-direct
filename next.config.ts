@@ -34,6 +34,8 @@ const nextConfig: NextConfig = {
   // Every page is per-user or live data, so we use classic dynamic rendering rather than
   // Cache Components / Partial Prerendering (see the ledger ruling in Task 1).
   poweredByHeader: false,
+  // Keep the dev overlay badge off the UI (it covers real content in demos and screenshots).
+  devIndicators: false,
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
