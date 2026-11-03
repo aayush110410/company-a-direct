@@ -65,6 +65,8 @@ export type MessageRow = { channel: "whatsapp"; to_phone: string; template: stri
 export type OrderDeps = {
   /** False only in demo mode: outlet opening hours are then not checked. */
   hoursEnforced: boolean;
+  /** Public site address, for links in customer messages. */
+  appUrl: string;
   loadOutlet(id: string): Promise<OutletSummary | null>;
   loadPriceBook(outlet: OutletSummary): Promise<PriceBookWithMeta>;
   loadAvailability(

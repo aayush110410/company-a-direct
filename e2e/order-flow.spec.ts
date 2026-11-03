@@ -39,6 +39,11 @@ test.describe("ordering direct", () => {
     // The customer's page follows without a reload.
     await expect(page.getByRole("listitem").filter({ hasText: "Cooking" }).getByText(/\d+:\d\d (am|pm)/)).toBeVisible({ timeout: 10_000 });
 
+    // From anywhere on the site, the header leads back to the live order.
+    await page.goto("/");
+    await page.getByRole("link", { name: "Track order" }).click();
+    await page.waitForURL(new RegExp(`/orders/${orderId}`));
+
     await customer.check();
     await kitchen.check();
     await customer.context.close();

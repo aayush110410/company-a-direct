@@ -60,7 +60,7 @@ export async function completeMockPayment(
       channel: "whatsapp",
       to_phone: order.phone,
       template: "order_confirmed",
-      body: `Order ${order.id} confirmed. Arriving by ${formatIstTime(promise.promisedAt)}. Track it live on the Company A site.`,
+      body: `Order ${order.id} confirmed. Arriving by ${formatIstTime(promise.promisedAt)}. Track it live: ${deps.appUrl}/orders/${order.id}`,
     },
   );
 

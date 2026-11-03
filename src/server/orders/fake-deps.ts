@@ -30,6 +30,7 @@ export function fakeOrderDeps(over: { outlet?: Partial<OutletSummary>; coupon?: 
 
   const deps: OrderDeps = {
     hoursEnforced: over.hoursEnforced ?? true,
+    appUrl: "https://example.test",
     loadOutlet: async (id) => (id === outlet.id ? outlet : null),
     loadPriceBook: async () => ({
       portions: {

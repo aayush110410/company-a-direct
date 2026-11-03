@@ -30,6 +30,7 @@ describe("completeMockPayment", () => {
     const promised = orders.get(id)!.promised!;
     expect(promised.getTime() - later.getTime()).toBeGreaterThanOrEqual(35 * 60_000);
     expect(calls.messages[0]).toMatch(new RegExp(`${id} confirmed`));
+    expect(calls.messages[0]).toContain(`https://example.test/orders/${id}`);
   });
 
   it("is idempotent when Pay is tapped twice", async () => {

@@ -12,6 +12,7 @@ export function orderDeps(): OrderDeps {
   return {
     // Demo deployments take orders round the clock so reviewers in any time zone can try them.
     hoursEnforced: !serverEnv().DEMO_MODE,
+    appUrl: serverEnv().APP_URL,
     async loadOutlet(id) {
       const { data } = await db
         .from("outlets")

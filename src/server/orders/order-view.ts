@@ -84,3 +84,18 @@ export async function countTicketsAhead(admin: SupabaseClient<Database>, orderId
     .lt("paid_at", o.paid_at);
   return count ?? 0;
 }
+
+const IN_PROGRESS = ["placed", "preparing", "ready", "handed_to_rider"] as const;
+
+/** The customer's latest paid order still on its way, for the header's way back to it. */
+export async function latestOpenOrderId(client: SupabaseClient<Database>, customerId: string): Promise<string | null> {
+  const { data } = await client
+    .from("orders")
+    .select("id")
+    .eq("customer_id", customerId)
+    .in("status", [...IN_PROGRESS])
+    .order("paid_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  return data?.id ?? null;
+}
